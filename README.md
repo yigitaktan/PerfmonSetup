@@ -5,7 +5,7 @@ You can easily create Perfmon Data Collector Sets for multiple SQL instances at 
 * **[functions.psm1](https://github.com/yigitaktan/PerfmonSetup/blob/main/functions.psm1):** Function file used by countersetup.ps1 script.
 * **[counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt):** List of counters required to create a Data Collector Set.
 ## Preparing counter set file ([counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt))
-First of all, you must determine the counters you want to collect data from. You should specify these counters in the **counterset.txt** file, one per line.
+First of all, you must determine the counters where you want to collect performance data from. You should specify these counters in the **counterset.txt** file, one per line.
 ```
 \PhysicalDisk(*)\Avg. Disk sec/Read
 \PhysicalDisk(*)\Avg. Disk sec/Write
@@ -60,10 +60,10 @@ Make sure all 3 component files are in the same folder. Then run the script with
 
 If you are having problems with PowerShell execution policy, please check this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
 
-When you run the script with Administrator privilege and the right execution policy setting you need, the following screen will appear.
+The following screen will appear when you run the script with Administrator privilege and the right execution policy setting you need.
 
 ![image](https://user-images.githubusercontent.com/51110247/135044020-561dc4a8-6ed8-4bd4-9f2c-9c6094792ae8.png)
 
-After answering a few questions in order, you can easily create the Data Collector Set.
+You can easily create the Data Collector Set after answering a few questions in order.
 
 ![image](https://user-images.githubusercontent.com/51110247/135069078-4c366c8e-b207-4251-84e5-98e995accd44.png)
