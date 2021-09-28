@@ -1,0 +1,211 @@
+\Cache\Dirty Pages
+\Cache\Lazy Write Flushes/sec
+\LogicalDisk(*)\% Free Space
+\LogicalDisk(*)\% Idle Time
+\LogicalDisk(*)\Avg. Disk Bytes/Read
+\LogicalDisk(*)\Avg. Disk Bytes/Transfer
+\LogicalDisk(*)\Avg. Disk Bytes/Write
+\LogicalDisk(*)\Avg. Disk Queue Length
+\LogicalDisk(*)\Avg. Disk sec/Read
+\LogicalDisk(*)\Avg. Disk sec/Transfer
+\LogicalDisk(*)\Avg. Disk sec/Write
+\LogicalDisk(*)\Current Disk Queue Length
+\LogicalDisk(*)\Disk Bytes/sec
+\LogicalDisk(*)\Disk Reads/sec
+\LogicalDisk(*)\Disk Transfers/sec
+\LogicalDisk(*)\Disk Writes/sec
+\LogicalDisk(*)\Free Megabytes
+\Memory\% Committed Bytes In Use
+\Memory\Available MBytes
+\Memory\Commit Limit
+\Memory\Committed Bytes
+\Memory\Free System Page Table Entries
+\Memory\Long-Term Average Standby Cache Lifetime (s)
+\Memory\Pages Input/sec
+\Memory\Pages Output/sec
+\Memory\Pages/sec
+\Memory\Pool Nonpaged Bytes
+\Memory\Pool Paged Bytes
+\Memory\Pool Paged Resident Bytes
+\Memory\System Cache Resident Bytes
+\Memory\Transition Pages RePurposed/sec
+\Network Inspection System\Average inspection latency (sec/bytes)
+\Network Interface(*)\Bytes Received/sec
+\Network Interface(*)\Bytes Sent/sec
+\Network Interface(*)\Bytes Total/sec
+\Network Interface(*)\Current Bandwidth
+\Network Interface(*)\Output Queue Length
+\Network Interface(*)\Packets Outbound Errors
+\Network Interface(*)\Packets Received/sec
+\Network Interface(*)\Packets Sent/sec
+\Network Interface(*)\Packets/sec
+\Paging File(*)\% Usage
+\Paging File(*)\% Usage Peak
+\PhysicalDisk(*)\Avg. Disk Queue Length
+\PhysicalDisk(*)\Avg. Disk sec/Read
+\PhysicalDisk(*)\Avg. Disk sec/Write
+\PhysicalDisk(*)\Current Disk Queue Length
+\PhysicalDisk(*)\Disk Bytes/sec
+\Process(*)\% Privileged Time
+\Process(*)\% Processor Time
+\Process(*)\Handle Count
+\Process(*)\ID Process
+\Process(*)\IO Data Operations/sec
+\Process(*)\IO Other Operations/sec
+\Process(*)\IO Read Operations/sec
+\Process(*)\IO Write Operations/sec
+\Process(*)\Private Bytes
+\Process(*)\Thread Count
+\Process(*)\Virtual Bytes
+\Process(*)\Working Set
+\Processor Information(*)\% DPC Time
+\Processor Information(*)\% Interrupt Time
+\Processor Information(*)\% of Maximum Frequency
+\Processor Information(*)\% Privileged Time
+\Processor Information(*)\% Processor Time
+\Processor Information(*)\% User Time
+\Processor Information(*)\DPC Rate
+\Processor Information(*)\Parking Status
+\Processor(*)\% DPC Time
+\Processor(*)\% Interrupt Time
+\Processor(*)\% Privileged Time
+\Processor(*)\% Processor Time
+\Processor(*)\% User Time
+\Processor(*)\DPC Rate
+\Server\Pool Nonpaged Failures
+\Server\Pool Paged Failures
+\System\Context Switches/sec
+\System\Processor Queue Length
+\System\System Calls/sec
+\TCPv4\Connection Failures
+\MSRS 2011 Web Service\Cache Misses/Sec
+\MSRS 2011 Web Service\Report Requests
+\MSRS 2011 Web Service\Total Memory Cache Misses
+\MSRS 2011 Web Service\Total Requests
+\Process(sqlservr)\% Privileged Time
+\Process(sqlservr)\% Processor Time
+\ReportServer:Service\Errors Total
+\ReportServer:Service\Errors/sec
+\ReportServer:Service\Memory Pressure State
+\ReportServer:Service\Memory Shrink Amount
+\ReportServer:Service\Memory Shrink Notifications/sec
+\SQLAgent:Jobs\Active jobs
+\SQLAgent:Jobs\Failed jobs
+\SQLAgent:Jobs\Job success rate
+\SQLAgent:Jobs\Successful jobs
+\SQLAgent:JobSteps\Active steps
+\SQLAgent:JobSteps\Total step retries
+\[MYINSTANCENAME]:Access Methods\Forwarded Records/sec
+\[MYINSTANCENAME]:Access Methods\FreeSpace Scans/sec
+\[MYINSTANCENAME]:Access Methods\Full Scans/sec
+\[MYINSTANCENAME]:Access Methods\Index Searches/sec
+\[MYINSTANCENAME]:Access Methods\Mixed page allocations/sec
+\[MYINSTANCENAME]:Access Methods\Page Splits/sec
+\[MYINSTANCENAME]:Access Methods\Range scans/sec
+\[MYINSTANCENAME]:Access Methods\Scan Point Revalidations/sec
+\[MYINSTANCENAME]:Access Methods\Table Lock Escalations/sec
+\[MYINSTANCENAME]:Access Methods\Workfiles Created/sec
+\[MYINSTANCENAME]:Access Methods\Worktables Created/sec
+\[MYINSTANCENAME]:Access Methods\Worktables From Cache Ratio
+\[MYINSTANCENAME]:Buffer Manager\Background writer pages/sec
+\[MYINSTANCENAME]:Buffer Manager\Buffer cache hit ratio
+\[MYINSTANCENAME]:Buffer Manager\Checkpoint pages/sec
+\[MYINSTANCENAME]:Buffer Manager\Free list stalls/sec
+\[MYINSTANCENAME]:Buffer Manager\Free pages
+\[MYINSTANCENAME]:Buffer Manager\Lazy writes/sec
+\[MYINSTANCENAME]:Buffer Manager\Page life expectancy
+\[MYINSTANCENAME]:Buffer Manager\Page lookups/sec
+\[MYINSTANCENAME]:Buffer Manager\Page reads/sec
+\[MYINSTANCENAME]:Buffer Manager\Page writes/sec
+\[MYINSTANCENAME]:Buffer Manager\Readahead pages/sec
+\[MYINSTANCENAME]:Buffer Manager\Target pages
+\[MYINSTANCENAME]:Buffer Node(*)\Database pages
+\[MYINSTANCENAME]:Buffer Node(*)\Foreign pages
+\[MYINSTANCENAME]:Buffer Node(*)\Local node page lookups/sec
+\[MYINSTANCENAME]:Buffer Node(*)\Page life expectancy
+\[MYINSTANCENAME]:Buffer Node(*)\Remote node page lookups/sec
+\[MYINSTANCENAME]:Cursor Manager by Type\Cursor Requests/sec
+\[MYINSTANCENAME]:Databases(*)\Active Transactions
+\[MYINSTANCENAME]:Databases(*)\Backup/Restore Throughput/sec
+\[MYINSTANCENAME]:Databases(*)\Bulk Copy Throughput/sec
+\[MYINSTANCENAME]:Databases(*)\Data File(s) Size (KB)
+\[MYINSTANCENAME]:Databases(*)\Log Bytes Flushed/sec
+\[MYINSTANCENAME]:Databases(*)\Log File(s) Size (KB)
+\[MYINSTANCENAME]:Databases(*)\Log File(s) Used Size (KB)
+\[MYINSTANCENAME]:Databases(*)\Log Flush Wait Time
+\[MYINSTANCENAME]:Databases(*)\Log Flush Waits/sec
+\[MYINSTANCENAME]:Databases(*)\Log Flushes/sec
+\[MYINSTANCENAME]:Databases(*)\Log Growths
+\[MYINSTANCENAME]:Databases(*)\Log Shrinks
+\[MYINSTANCENAME]:Databases(*)\Log Truncations
+\[MYINSTANCENAME]:Databases(*)\Percent Log Used
+\[MYINSTANCENAME]:Deprecated Features(*)\Usage
+\[MYINSTANCENAME]:General Statistics\Active Temp Tables
+\[MYINSTANCENAME]:General Statistics\Logins/sec
+\[MYINSTANCENAME]:General Statistics\Logouts/sec
+\[MYINSTANCENAME]:General Statistics\Processes Blocked
+\[MYINSTANCENAME]:General Statistics\Temp Tables Creation Rate
+\[MYINSTANCENAME]:General Statistics\Temp Tables For Destruction
+\[MYINSTANCENAME]:General Statistics\User Connections
+\[MYINSTANCENAME]:Latches\Average Latch Wait Time (ms)
+\[MYINSTANCENAME]:Latches\Latch Waits/sec
+\[MYINSTANCENAME]:Latches\Total Latch Wait Time (ms)
+\[MYINSTANCENAME]:Locks(*)\Average Wait Time (ms)
+\[MYINSTANCENAME]:Locks(*)\Lock Requests/sec
+\[MYINSTANCENAME]:Locks(*)\Lock Timeouts/sec
+\[MYINSTANCENAME]:Locks(*)\Lock Wait Time (ms)
+\[MYINSTANCENAME]:Locks(*)\Lock Waits/sec
+\[MYINSTANCENAME]:Locks(*)\Number of Deadlocks/sec
+\[MYINSTANCENAME]:Memory Manager\Granted Workspace Memory (KB)
+\[MYINSTANCENAME]:Memory Manager\Maximum Workspace Memory (KB)
+\[MYINSTANCENAME]:Memory Manager\Memory Grants Outstanding
+\[MYINSTANCENAME]:Memory Manager\Memory Grants Pending
+\[MYINSTANCENAME]:Memory Manager\Optimizer Memory (KB)
+\[MYINSTANCENAME]:Memory Manager\Stolen Server Memory (KB)
+\[MYINSTANCENAME]:Memory Manager\Target Server Memory (KB)
+\[MYINSTANCENAME]:Memory Manager\Target Server Memory(KB)
+\[MYINSTANCENAME]:Memory Manager\Total Server Memory (KB)
+\[MYINSTANCENAME]:Memory Node(*)\Database Node Memory (KB)
+\[MYINSTANCENAME]:Memory Node(*)\Foreign Node Memory (KB)
+\[MYINSTANCENAME]:Memory Node(*)\Stolen Node Memory (KB)
+\[MYINSTANCENAME]:Memory Node(*)\Target Node Memory (KB)
+\[MYINSTANCENAME]:Memory Node(000)\Total Node Memory (KB)
+\[MYINSTANCENAME]:Plan Cache(*)\Cache Hit Ratio
+\[MYINSTANCENAME]:Resource Pool Stats(*)\CPU usage %
+\[MYINSTANCENAME]:Resource Pool Stats(*)\Max memory (KB)
+\[MYINSTANCENAME]:Resource Pool Stats(*)\Target memory (KB)
+\[MYINSTANCENAME]:Resource Pool Stats(*)\Used memory (KB)
+\[MYINSTANCENAME]:SQL Errors(*)\Errors/sec
+\[MYINSTANCENAME]:SQL Statistics\Auto-Param Attempts/sec
+\[MYINSTANCENAME]:SQL Statistics\Batch Requests/sec
+\[MYINSTANCENAME]:SQL Statistics\Failed Auto-Params/sec
+\[MYINSTANCENAME]:SQL Statistics\Safe Auto-Params/sec
+\[MYINSTANCENAME]:SQL Statistics\SQL Attention rate
+\[MYINSTANCENAME]:SQL Statistics\SQL Compilations/sec
+\[MYINSTANCENAME]:SQL Statistics\SQL Re-Compilations/sec
+\[MYINSTANCENAME]:SQL Statistics\Unsafe Auto-Params/sec
+\[MYINSTANCENAME]:Transactions\Free Space in tempdb (KB)
+\[MYINSTANCENAME]:Transactions\Longest Transaction Running Time
+\[MYINSTANCENAME]:Transactions\NonSnapshot Version Transactions
+\[MYINSTANCENAME]:Transactions\Snapshot Transactions
+\[MYINSTANCENAME]:Transactions\Transactions
+\[MYINSTANCENAME]:Transactions\Version Cleanup rate (KB/s)
+\[MYINSTANCENAME]:Transactions\Version Generation rate (KB/s)
+\[MYINSTANCENAME]:Transactions\Version Store Size (KB)
+\[MYINSTANCENAME]:User Settable(*)\Query
+\[MYINSTANCENAME]:Wait Statistics(*)\Lock waits
+\[MYINSTANCENAME]:Wait Statistics(*)\Log write waits
+\[MYINSTANCENAME]:Wait Statistics(*)\Network IO waits
+\[MYINSTANCENAME]:Wait Statistics(*)\Non-Page latch waits
+\[MYINSTANCENAME]:Wait Statistics(*)\Page IO latch waits
+\[MYINSTANCENAME]:Wait Statistics(*)\Page latch waits
+\[MYINSTANCENAME]:Wait Statistics(*)\Wait for the worker
+\[MYINSTANCENAME]:Workload Group Stats(*)\Active parallel threads
+\[MYINSTANCENAME]:Workload Group Stats(*)\Active requests
+\[MYINSTANCENAME]:Workload Group Stats(*)\CPU usage %
+\[MYINSTANCENAME]:Workload Group Stats(*)\Queued requests
+\[MYINSTANCENAME]:Workload Group Stats(*)\Reduced memory grants/sec
+\[MYINSTANCENAME]:Workload Group Stats(*)\Requests completed/sec
+\[MYINSTANCENAME]:Workload Group Stats(*)\Suboptimal plans/sec
+\[MYINSTANCENAME]:Database Replica(*)\*
+\[MYINSTANCENAME]:Availability Replica(*)\*
