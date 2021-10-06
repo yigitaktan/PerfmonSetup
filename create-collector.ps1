@@ -1,4 +1,4 @@
-﻿<# 
+<# 
 ╔═════════════════════════════════════════════════════════════════════════════╗
 ║DEVELOPER DOES NOT WARRANT THAT THE SCRIPT WILL MEET YOUR NEEDS OR BE FREE   ║
 ║FROM ERRORS, OR THAT THE OPERATIONS OF THE SOFTWARE WILL BE UNINTERRUPTED.   ║
@@ -12,19 +12,19 @@
 #>
 
 
-Import-Module $PSScriptRoot\functions.psm1
-
+Import-Module -DisableNameChecking .\functions.psm1
 
 cls
 
-$AppVer = '09.2021.1'
+$AppVer = '10.2021.1'
 
-$SqlInstanceMenuArrayList = New-Object -TypeName "System.Collections.ArrayList"
-$SqlInstanceMenuArrayList = [System.Collections.ArrayList]@()
-$SqlInstanceArrayList = New-Object -TypeName "System.Collections.ArrayList"
-$SqlInstanceArrayList = [System.Collections.ArrayList]@()
-$StartCollectorList = New-Object -TypeName "System.Collections.ArrayList"
-$StartCollectorList = [System.Collections.ArrayList]@()
+$global:SqlInstanceMenuArrayList = New-Object -TypeName "System.Collections.ArrayList"
+$global:SqlInstanceMenuArrayList = [System.Collections.ArrayList]@()
+$global:SqlInstanceArrayList = New-Object -TypeName "System.Collections.ArrayList"
+$global:SqlInstanceArrayList = [System.Collections.ArrayList]@()
+$global:StartCollectorList = New-Object -TypeName "System.Collections.ArrayList"
+$global:StartCollectorList = [System.Collections.ArrayList]@()
+
 
 #Caption
 Write-Host "╔════════════════════════════════════════════════════════════╗" -ForegroundColor Gray
@@ -34,6 +34,7 @@ Write-Host "║ Yigit Aktan ║ Microsoft ║ yigita@microsoft.com ║" $AppVer 
 Write-Host "╚═════════════╩═══════════╩══════════════════════╩═══════════╝" -ForegroundColor Gray
 Write-Host ""
 
+
 #Administrator permission check
 if (-not([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
  {
@@ -42,6 +43,7 @@ if (-not([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdenti
   exit
  }
 
+
 #Counter file check
 if (-not(Test-Path -Path $PSScriptRoot\counterset.txt -PathType Leaf)) 
  {
@@ -49,171 +51,110 @@ if (-not(Test-Path -Path $PSScriptRoot\counterset.txt -PathType Leaf))
   exit
  }
 
+ 
 #List all SQL instances
 Get-SqlInstances
- 
-#Check if there is not SQL instance
+
+
+#Check if there is no SQL instance
 if ($global:IsSQL -eq "no")
  {
   Write-Colr -Text '[*] ', 'There is no SQL Server instance on this server!'  -Colour Gray, Red
   exit
  }
 
+
 #Select SQL instance
 Write-Host "Which instance you would like to create Data Collector Set for?" -ForegroundColor Yellow
 Write-Host ""
-$SqlInstanceMenuArrayList
+$global:SqlInstanceMenuArrayList
 Write-Host ""
-$InstanceNumber = Read-Host "Enter selection number (CTRL+C to quit)"
-if (($InstanceNumber -gt $SqlInstanceMenuArrayList.Count) -or (!$InstanceNumber))
-{
-  Write-Host ""
-  Write-Host "Please enter a valid number from list above!"
-  Write-Host ""
-  Start-Sleep -Milliseconds 300
-} else{
+Do {$global:InstanceNumber = Read-Host "Enter selection number (CTRL+C to quit)"}
+Until (($global:InstanceNumber -cle $global:SqlInstanceMenuArrayList.Count) -and ($global:InstanceNumber -match '^[0-9]+$' -eq "False"  ))
+{}
+Write-Host "[+]" $global:SqlInstanceArrayList[$global:InstanceNumber - 1]   -ForegroundColor Green
+Write-Host ""
+
 
 #Set data collection interval
+Do {$global:IntervalNumber  = $(Write-Host "Enter data collection interval " -NoNewLine) + $(Write-Host "(default: 00:00:15)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($global:IntervalNumber -match '^[0-0][0-0]:[0-0][0-0]:[0-9][0-9]$') -or (!$global:IntervalNumber))
 Write-Host ""
-Write-Host "[+]" $SqlInstanceArrayList[$InstanceNumber - 1]   -ForegroundColor Green
-Write-Host ""
-Write-Host "Enter data collection interval " -NoNewline
-Write-Host "(default: 00:00:15)" -ForegroundColor Yellow -NoNewline
-Write-Host ": " -NoNewline
-$IntervalNumber  = Read-Host 
-Write-Host ""
- if (!$IntervalNumber) 
+ if (!$global:IntervalNumber) 
   {
    Write-Host "[+]" 00:00:15 -ForegroundColor Green 
-   $IntervalNumber = "00:00:15"
+   $global:IntervalNumber = "00:00:15"
   }
  else 
   { 
-   Write-Host "[+]" $IntervalNumber -ForegroundColor Green
+   Write-Host "[+]" $global:IntervalNumber -ForegroundColor Green
   }
+Write-Host ""
+
 
 #Set max log file size
+Do {$global:MaxLogFileSize  = $(Write-Host "Enter maximum log file size in MB " -NoNewLine) + $(Write-Host "(default: 1000)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($global:MaxLogFileSize -match '^[0-9]+$') -or (!$global:MaxLogFileSize))
 Write-Host ""
-Write-Host "Enter maximum log file size in MB " -NoNewline
-Write-Host "(default: 700)" -ForegroundColor Yellow -NoNewline
-Write-Host ": " -NoNewline
-$MaxLogFileSize  = Read-Host 
-Write-Host ""
- if (!$MaxLogFileSize)
+ if (!$global:MaxLogFileSize)
   {
-   Write-Host "[+] 700MB" -ForegroundColor Green
-   $MaxLogFileSize = "700"
+   Write-Host "[+] 1000 MB" -ForegroundColor Green
+   $global:MaxLogFileSize = "1000"
   }
  else 
   { 
-   Write-Host "[+]" $MaxLogFileSize "MB" -ForegroundColor Green
+   Write-Host "[+]" $global:MaxLogFileSize "MB" -ForegroundColor Green
   }
+Write-Host ""
 
-#BLG file path
+
+#Set BLG file path
+Do {$global:LogFilePath  = $(Write-Host "Enter output (*.blg) file path " -NoNewLine) + $(Write-Host "(default: C:\perfmon_data)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($global:LogFilePath -match '(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:"/\\|?*])|\/(?![\0-\37<>:"/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:"/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:"/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:"/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:"/\\|?*]+))((\\|\/)[^\0-\37<>:"/\\|?*]+|(\\|\/)$)*()$') -or (!$global:LogFilePath))
 Write-Host ""
-Write-Host "Enter output (*.blg) file path " -NoNewline
-Write-Host "(default: C:\temp)" -ForegroundColor Yellow -NoNewline
-Write-Host ": " -NoNewline
-$LogFilePath  = Read-Host 
+ if (!$global:LogFilePath)
+  {
+   $global:LogFilePath = "C:\perfmon_data"
+   If (Test-Path $global:LogFilePath)
+    {
+     Write-Host "[+] C:\perfmon_data" -ForegroundColor Green      
+    }
+   Else
+    {
+     Write-Host "[+] C:\perfmon_data (Folder will be created)" -ForegroundColor Green 
+    }
+  }
+ Else 
+  { 
+   If (Test-Path $global:LogFilePath)
+    {
+     Write-Host "[+]" $global:LogFilePath -ForegroundColor Green 
+    }
+   Else
+    {
+     Write-Host "[+]" $global:LogFilePath "(Folder will be created)" -ForegroundColor Green 
+    }   
+  }
 Write-Host ""
- if (!$LogFilePath)
-  { 
-   Write-Host "[+] C:\temp" -ForegroundColor Green 
-   $LogFilePath = "C:\temp"
-  }
- else 
-  { 
-   Write-Host "[+]" $LogFilePath -ForegroundColor Green 
-  }
+
 
 #Start data collector set?
-Write-Host ""
-$StartCollector = Read-Host "Would you like to start data collector set after created? (Y/N)"
- if ($StartCollector -eq "y" -or $StartCollector -eq "n") 	    
-  {
+Do {$StartCollector = Read-Host "Would you like to start data collector set after created? (Y/N)"}
+Until (($StartCollector -eq "y") -or ($StartCollector -eq "n")) 	    
    if (!$StartCollector -or $StartCollector -eq "y")
     {
-     $StartCollectorCheck = "y"
+     $global:StartCollectorCheck = "y"
      Write-Host ""
 	 Write-Host "[+] Yes" -ForegroundColor Green
 	 Write-Host ""
+     Create-DataCollectorSet
     }	   
    elseif ($StartCollector -eq "n")
     {
-     $StartCollectorCheck = "n"
+     $global:StartCollectorCheck = "n"
      Write-Host ""
 	 Write-Host "[+] No" -ForegroundColor Green
 	 Write-Host ""
+     Create-DataCollectorSet
     }
 Write-Host ""
-
-
-     if (($SqlInstanceArrayList[$InstanceNumber - 1] -ne "All") -and ($SqlInstanceArrayList[$InstanceNumber - 1] -ne "MSSQLSERVER")) #If single named instance selected   
-     {
-      $SelectedInstance = $SqlInstanceArrayList[$InstanceNumber - 1]
-      ((Get-Content -path $PSScriptRoot\counterset.txt -Raw) -replace '\[MYINSTANCENAME]:',('MSSQL$'+$SelectedInstance+':')) | Set-Content -Path $PSScriptRoot\$SelectedInstance.txt
-      
-      Delete-BlgFile -Instance $SelectedInstance
-                        
-      $logmanparam = "CREATE COUNTER -n " + $SelectedInstance + "_SfMC_Counter_Set -s . -cf " + $PSScriptRoot + "\" + $SelectedInstance + ".txt -f bincirc -max " + $MaxLogFileSize + " -si " + $IntervalNumber + " -o " + $LogFilePath + "\" + $SelectedInstance + "_sfmc_perfmon.blg"                 
-      Start-Process -WindowStyle hidden -FilePath "logman.exe" -ArgumentList $logmanparam
-
-      $SingleSelection = "y"
-                    
-      if ($StartCollectorList -notcontains $SelectedInstance){ $StartCollectorList.Add($SelectedInstance) > $null }
-      Write-Host "[*] Data Collector Set creating for" $SelectedInstance -ForegroundColor Green
-     } 
-    elseif ($SqlInstanceArrayList[$InstanceNumber - 1] -eq "MSSQLSERVER") #If default instance selected
-     {
-      $SelectedInstance = $SqlInstanceArrayList[$InstanceNumber - 1]
-      ((Get-Content -path $PSScriptRoot\counterset.txt -Raw) -replace '\[MYINSTANCENAME]:','SQLServer:') | Set-Content -Path $PSScriptRoot\$SelectedInstance.txt
-
-      Delete-BlgFile -Instance $SelectedInstance
-
-      $logmanparam = "CREATE COUNTER -n " + $SelectedInstance + "_SfMC_Counter_Set -s . -cf " + $PSScriptRoot + "\" + $SelectedInstance + ".txt -f bincirc -max " + $MaxLogFileSize + " -si " + $IntervalNumber + " -o " + $LogFilePath + "\" + $SelectedInstance + "_sfmc_perfmon.blg"                              
-      Start-Process -WindowStyle hidden -FilePath "logman.exe" -ArgumentList $logmanparam
-
-      $SingleSelection = "y"
-                    
-      if ($StartCollectorList -notcontains $SelectedInstance){ $StartCollectorList.Add($SelectedInstance) > $null }
-      Write-Host "[*] Data Collector Set creating for" $SelectedInstance -ForegroundColor Green
-     }
-    elseif (($SqlInstanceArrayList[$InstanceNumber - 1] = "All") -and ($SingleInstanceCheck -eq "n")) #If all instances selected
-     {
-      $SingleSelection = "n"
-       for ($i=0; $i -lt $SqlInstanceArrayList.Count-1; $i++) 
-        {
-         $filename = $PSScriptRoot + "\" + $SqlInstanceArrayList[$i] + ".txt"
-         $SelectedInstance = "All"
-
-         if ($StartCollectorList -notcontains $SqlInstanceArrayList[$i]){ $StartCollectorList.Add($SqlInstanceArrayList[$i]) > $null }
-         Write-Host "[*] Data Collector Set creating for" $SqlInstanceArrayList[$i] -ForegroundColor Green
-
-          if ($SqlInstanceArrayList[$i] -eq "MSSQLSERVER")
-           {
-            ((Get-Content -path $PSScriptRoot\counterset.txt -Raw) -replace '\[MYINSTANCENAME]:','SQLServer:') | Set-Content -Path $filename
-
-            Delete-BlgFile -Instance $SqlInstanceArrayList[$i]
-
-            $logmanparam = "CREATE COUNTER -n MSSQLSERVER_SfMC_Counter_Set -s . -cf " + $PSScriptRoot + "\MSSQLSERVER.txt -f bincirc -max " + $MaxLogFileSize + " -si " + $IntervalNumber + " -o " + $LogFilePath + "\MSSQLSERVER_sfmc_perfmon.blg"                 
-            Start-Process -WindowStyle hidden -FilePath "logman.exe" -ArgumentList $logmanparam
-            
-            if ($StartCollectorList -notcontains 'MSSQLSERVER'){ $StartCollectorList.Add("MSSQLSERVER") > $null }
-           }
-          else
-           {
-            ((Get-Content -path $PSScriptRoot\counterset.txt -Raw) -replace '\[MYINSTANCENAME]:',('MSSQL$'+$SqlInstanceArrayList[$i]+':')) | Set-Content -Path $filename
-
-            Delete-BlgFile -Instance $SqlInstanceArrayList[$i]
-
-            $logmanparam = "CREATE COUNTER -n " + $SqlInstanceArrayList[$i] + "_SfMC_Counter_Set -s . -cf " + $PSScriptRoot +"\" + $SqlInstanceArrayList[$i] + ".txt -f bincirc -max " + $MaxLogFileSize + " -si " + $IntervalNumber + " -o " + $LogFilePath + "\" + $SqlInstanceArrayList[$i] + "_sfmc_perfmon.blg"                 
-            Start-Process -WindowStyle hidden -FilePath "logman.exe" -ArgumentList $logmanparam
-                     
-            if ($StartCollectorList -notcontains $SqlInstanceArrayList[$i]){ $StartCollectorList.Add($SqlInstanceArrayList[$i]) > $null }
-           }
-        }              
-     }
-        }
-   Start-DataCollectorSet
-  }
-
