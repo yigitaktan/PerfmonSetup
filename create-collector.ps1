@@ -70,31 +70,38 @@ Write-Host ""
 $global:SqlInstanceMenuArrayList
 Write-Host ""
 Do {$global:InstanceNumber = Read-Host "Enter selection number (CTRL+C to quit)"}
-Until (($global:InstanceNumber -cle $global:SqlInstanceMenuArrayList.Count) -and ($global:InstanceNumber -match '^[0-9]+$' -eq "False"  ))
-{}
+Until (($global:InstanceNumber -cle $global:SqlInstanceMenuArrayList.Count) -and ($global:InstanceNumber -match '^[1-9]{1}$' -eq "False"  ))
+{} #-cle cge
 Write-Host "[+]" $global:SqlInstanceArrayList[$global:InstanceNumber - 1]   -ForegroundColor Green
 Write-Host ""
 
 
 #Set data collection interval
-Do {$global:IntervalNumber  = $(Write-Host "Enter data collection interval " -NoNewLine) + $(Write-Host "(default: 00:00:15)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
-Until (($global:IntervalNumber -match '^[0-0][0-0]:[0-0][0-0]:[0-9][0-9]$') -or (!$global:IntervalNumber))
+Do {$global:IntervalNumber  = $(Write-Host "Enter data collection interval (sec) " -NoNewLine) + $(Write-Host "(default: 15)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($global:IntervalNumber -match '^[1-9][0-9]{0,3}$') -or (!$global:IntervalNumber))
 Write-Host ""
- if (!$global:IntervalNumber) 
+ If (!$global:IntervalNumber) 
   {
-   Write-Host "[+]" 00:00:15 -ForegroundColor Green 
-   $global:IntervalNumber = "00:00:15"
+   Write-Host "[+] 15 seconds" -ForegroundColor Green 
+   $global:IntervalNumber = "15"
   }
- else 
+ Else 
   { 
-   Write-Host "[+]" $global:IntervalNumber -ForegroundColor Green
+   If ($global:IntervalNumber -eq "1")
+    {
+     Write-Host "[+]" $global:IntervalNumber "second" -ForegroundColor Green
+    }
+   Else
+    {
+     Write-Host "[+]" $global:IntervalNumber "seconds" -ForegroundColor Green
+    }
   }
 Write-Host ""
 
 
 #Set max log file size
 Do {$global:MaxLogFileSize  = $(Write-Host "Enter maximum log file size in MB " -NoNewLine) + $(Write-Host "(default: 1000)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
-Until (($global:MaxLogFileSize -match '^[0-9]+$') -or (!$global:MaxLogFileSize))
+Until (($global:MaxLogFileSize -match '^[1-9][0-9]{2,4}$') -or (!$global:MaxLogFileSize))
 Write-Host ""
  if (!$global:MaxLogFileSize)
   {
@@ -143,18 +150,18 @@ Do {$StartCollector = Read-Host "Would you like to start data collector set afte
 Until (($StartCollector -eq "y") -or ($StartCollector -eq "n")) 	    
    if (!$StartCollector -or $StartCollector -eq "y")
     {
-     $global:StartCollectorCheck = "y"
+     $global:StartCollectorCheck =  1 #"y"
      Write-Host ""
 	 Write-Host "[+] Yes" -ForegroundColor Green
 	 Write-Host ""
-     Create-DataCollectorSet
+     Select-SqlInstance
     }	   
    elseif ($StartCollector -eq "n")
     {
-     $global:StartCollectorCheck = "n"
+     $global:StartCollectorCheck =  0 #"n"
      Write-Host ""
 	 Write-Host "[+] No" -ForegroundColor Green
 	 Write-Host ""
-     Create-DataCollectorSet
+     Select-SqlInstance
     }
 Write-Host ""
