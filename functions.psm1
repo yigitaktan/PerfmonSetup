@@ -96,7 +96,7 @@ Function Select-SqlInstance
 
     Delete-BlgFile -Instance $global:SelectedInstance
 
-    Create-DataCollectorSet -InstanceName $global:SelectedInstance -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck
+    Create-DataCollectorSet -InstanceName $global:SelectedInstance -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck -MaxFileSize $global:MaxLogFileSize
                     
     If ($global:StartCollectorList -notcontains $global:SelectedInstance){ $global:StartCollectorList.Add($global:SelectedInstance) > $null }
     Write-Host "[*] Data Collector Set creating for" $global:SelectedInstance -ForegroundColor DarkYellow
@@ -107,7 +107,7 @@ Function Select-SqlInstance
 
     Delete-BlgFile -Instance $global:SelectedInstance
 
-    Create-DataCollectorSet -InstanceName $global:SelectedInstance -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck
+    Create-DataCollectorSet -InstanceName $global:SelectedInstance -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck -MaxFileSize $global:MaxLogFileSize
                
     If ($global:StartCollectorList -notcontains $global:SelectedInstance){ $global:StartCollectorList.Add($global:SelectedInstance) > $null }
     Write-Host "[*] Data Collector Set creating for" $global:SelectedInstance -ForegroundColor DarkYellow
@@ -126,7 +126,7 @@ Function Select-SqlInstance
        {
         Delete-BlgFile -Instance $global:SqlInstanceArrayList[$i]
 
-        Create-DataCollectorSet -InstanceName "MSSQLSERVER" -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck
+        Create-DataCollectorSet -InstanceName "MSSQLSERVER" -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck -MaxFileSize $global:MaxLogFileSize
     
         If ($global:StartCollectorList -notcontains 'MSSQLSERVER'){ $global:StartCollectorList.Add("MSSQLSERVER") > $null }
        }
@@ -134,7 +134,7 @@ Function Select-SqlInstance
        {
         Delete-BlgFile -Instance $global:SqlInstanceArrayList[$i]
 
-        Create-DataCollectorSet -InstanceName $global:SqlInstanceArrayList[$i] -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck
+        Create-DataCollectorSet -InstanceName $global:SqlInstanceArrayList[$i] -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck -MaxFileSize $global:MaxLogFileSize
              
         If ($global:StartCollectorList -notcontains $global:SqlInstanceArrayList[$i]){ $global:StartCollectorList.Add($global:SqlInstanceArrayList[$i]) > $null }
        }
@@ -148,7 +148,7 @@ Function Select-SqlInstance
 
 Function Create-DataCollectorSet
 {
- Param ([string]$InstanceName, [string]$OutputFolder, [string]$Interval, [bool]$Circular, [string]$CounterFile, [bool]$StartCounter)
+ Param ([string]$InstanceName, [string]$OutputFolder, [string]$Interval, [bool]$Circular, [string]$CounterFile, [bool]$StartCounter, [string]$MaxFileSize)
  
  $GenerateRandomNum = (Get-Random -Minimum 100 -Maximum 1000)
  $DataCollectorSet = New-Object -COM Pla.DataCollectorSet
@@ -230,6 +230,10 @@ Function Create-DataCollectorSet
    $mypath = $global:LogFilePath + "\" + $BlgName + "000001.blg"
 
    $DataCollectorSet.DataCollectors.Add($Collector) 
+
+   $DataCollectorSet.Segment = -1
+   $DataCollectorSet.SegmentMaxSize = $MaxFileSize
+
    $DataCollectorSet.Commit($DCName , $null , 0x0003) | Out-Null
     
     If($StartCounter -eq 1)
