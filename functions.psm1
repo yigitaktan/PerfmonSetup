@@ -37,7 +37,7 @@ Function Get-SqlInstances
       {
        $temp = $caption | %{$_.split(" ")[-1]} | %{$_.trimStart("(")} | %{$_.trimEnd(")")}
 
-       $global:SqlInstanceMenuArrayList.Add("$count) $ServerName\$temp") > $null
+       $global:SqlInstanceMenuArrayList.Add(" $count) $ServerName\$temp") > $null
        $global:SqlInstanceArrayList.Add("$temp") > $null
       }
    }
@@ -45,7 +45,7 @@ Function Get-SqlInstances
    if ($captions.Count -gt 1)
     {
      $global:SingleInstanceCheck = "n"
-     $global:SqlInstanceMenuArrayList.Add("$all) All") > $null
+     $global:SqlInstanceMenuArrayList.Add(" $all) All") > $null
      $global:SqlInstanceArrayList.Add("All") > $null
      $global:IsSQL = "yes"
     }
@@ -72,9 +72,9 @@ Function Write-Colr
 Function AllDone
  {
   Write-Host ""
-  Write-Host "┌────────────────────────────────────────────────────────────┐" -ForegroundColor DarkCyan
-  Write-Colr -Text '│', '                   Successfully Completed                   ', '│' -Colour DarkCyan, Gray, DarkCyan
-  Write-Host "└────────────────────────────────────────────────────────────┘" -ForegroundColor DarkCyan
+  Write-Host " ┌────────────────────────────────────────────────────────────┐" -ForegroundColor DarkCyan
+  Write-Colr -Text ' │', '                   Successfully Completed                   ', '│' -Colour DarkCyan, Gray, DarkCyan
+  Write-Host " └────────────────────────────────────────────────────────────┘" -ForegroundColor DarkCyan
  }
 
 
@@ -99,7 +99,8 @@ Function Select-SqlInstance
     Create-DataCollectorSet -InstanceName $global:SelectedInstance -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck -MaxFileSize $global:MaxLogFileSize
                     
     If ($global:StartCollectorList -notcontains $global:SelectedInstance){ $global:StartCollectorList.Add($global:SelectedInstance) > $null }
-    Write-Host "[*] Data Collector Set creating for" $global:SelectedInstance -ForegroundColor DarkYellow
+    Write-Host " [*] Data Collector Set creating for" $global:SelectedInstance -ForegroundColor DarkYellow
+    Write-Host " [*]" $global:CollectorDisplayName "is created" -ForegroundColor DarkYellow
    } 
   ElseIf ($global:SqlInstanceArrayList[$global:InstanceNumber - 1] -eq "MSSQLSERVER") #If default instance selected
    {
@@ -110,7 +111,8 @@ Function Select-SqlInstance
     Create-DataCollectorSet -InstanceName $global:SelectedInstance -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck -MaxFileSize $global:MaxLogFileSize
                
     If ($global:StartCollectorList -notcontains $global:SelectedInstance){ $global:StartCollectorList.Add($global:SelectedInstance) > $null }
-    Write-Host "[*] Data Collector Set creating for" $global:SelectedInstance -ForegroundColor DarkYellow
+    Write-Host " [*] Data Collector Set creating for" $global:SelectedInstance -ForegroundColor DarkYellow
+    Write-Host " [*]" $global:CollectorDisplayName "is created" -ForegroundColor DarkYellow
    }
   ElseIf (($global:SqlInstanceArrayList[$global:InstanceNumber - 1] = "All") -and ($global:SingleInstanceCheck -eq "n")) #If all instances selected
    {
@@ -120,7 +122,7 @@ Function Select-SqlInstance
       $global:SelectedInstance = "All"
 
       If ($global:StartCollectorList -notcontains $global:SqlInstanceArrayList[$i]){ $global:StartCollectorList.Add($global:SqlInstanceArrayList[$i]) > $null }
-      Write-Host "[*] Data Collector Set creating for" $global:SqlInstanceArrayList[$i] -ForegroundColor DarkYellow
+      Write-Host " [*] Data Collector Set creating for" $global:SqlInstanceArrayList[$i] -ForegroundColor DarkYellow
 
       If ($global:SqlInstanceArrayList[$i] -eq "MSSQLSERVER")
        {
@@ -129,6 +131,7 @@ Function Select-SqlInstance
         Create-DataCollectorSet -InstanceName "MSSQLSERVER" -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck -MaxFileSize $global:MaxLogFileSize
     
         If ($global:StartCollectorList -notcontains 'MSSQLSERVER'){ $global:StartCollectorList.Add("MSSQLSERVER") > $null }
+        Write-Host " [*]" $global:CollectorDisplayName "is created" -ForegroundColor DarkYellow
        }
       Else
        {
@@ -137,6 +140,7 @@ Function Select-SqlInstance
         Create-DataCollectorSet -InstanceName $global:SqlInstanceArrayList[$i] -OutputFolder $global:LogFilePath -Interval $IntervalNumber -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $global:StartCollectorCheck -MaxFileSize $global:MaxLogFileSize
              
         If ($global:StartCollectorList -notcontains $global:SqlInstanceArrayList[$i]){ $global:StartCollectorList.Add($global:SqlInstanceArrayList[$i]) > $null }
+        Write-Host " [*]" $global:CollectorDisplayName "is created" -ForegroundColor DarkYellow
        }
       }              
      }
@@ -164,7 +168,7 @@ Function Create-DataCollectorSet
          Write-Host ""
          Write-Host "[+] Yes" -ForegroundColor Green 
 	     Write-Host ""
-         $CollectorDisplayName = $InstanceName + "_DCS" + $GenerateRandomNum
+         $global:CollectorDisplayName = $InstanceName + "_DCS" + $GenerateRandomNum
          $DCName = $InstanceName + "_DCS" + $GenerateRandomNum;
          $BlgName = $env:computername + "_" + $InstanceName + "_DCS" + $GenerateRandomNum + "_perfmon_";
         }	   
@@ -179,13 +183,13 @@ Function Create-DataCollectorSet
   }
  Catch
   {
-   $CollectorDisplayName = $InstanceName + "_DCS" + $GenerateRandomNum
+   $global:CollectorDisplayName = $InstanceName + "_DCS" + $GenerateRandomNum
    $DCName = $InstanceName + "_DCS" + $GenerateRandomNum;
    $BlgName = $env:computername + "_" + $InstanceName + "_DCS" + $GenerateRandomNum + "_perfmon_";
   }
 
 
- $DataCollectorSet.DisplayName = $CollectorDisplayName
+ $DataCollectorSet.DisplayName = $global:CollectorDisplayName
  $DataCollectorSet.RootPath    = $OutputFolder;
 
  $Collector = $DataCollectorSet.DataCollectors.CreateDataCollector(0) 
@@ -244,6 +248,7 @@ Function Create-DataCollectorSet
      {
       $DataCollectorSet.Stop($true);
      }
+   
    
   }
  Catch [Exception] 
