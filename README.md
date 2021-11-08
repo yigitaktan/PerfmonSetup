@@ -56,7 +56,7 @@ If you do not run Command Prompt or PowerShell IDE with Administrator privilege,
 
 Make sure all 3 component files are in the same folder. Then run the script with the following command.
 
-`powershell.exe -File .\countersetup.ps1`
+`powershell.exe -File .\create-collector.ps1`
 
 If you are having problems with PowerShell execution policy, please check this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
 
