@@ -16,7 +16,7 @@ Import-Module -DisableNameChecking .\functions.psm1
 
 cls
 
-$AppVer = '10.2021.3'
+$AppVer = "10.2021.3"
 
 $global:SqlInstanceMenuArrayList = New-Object -TypeName "System.Collections.ArrayList"
 $global:SqlInstanceMenuArrayList = [System.Collections.ArrayList]@()
@@ -25,7 +25,7 @@ $global:SqlInstanceArrayList = [System.Collections.ArrayList]@()
 $global:StartCollectorList = New-Object -TypeName "System.Collections.ArrayList"
 $global:StartCollectorList = [System.Collections.ArrayList]@()
 
-
+ 
 #Caption
 Write-Host " ╔════════════════════════════════════════════════════════════╗" -ForegroundColor Gray
 Write-Host " ║ Perfmon Data Collector Set Setup for SQL Server instances  ║" -ForegroundColor Gray
