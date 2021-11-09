@@ -67,3 +67,5 @@ The following screen will appear when you run the script with Administrator priv
 You can easily create the Data Collector Set after answering a few questions in order.
 
 ![image](https://user-images.githubusercontent.com/51110247/135069078-4c366c8e-b207-4251-84e5-98e995accd44.png)
+
+**[!]** *If you are getting character errors when you run the script, save the files as UTF-16 encoding standard and try again.*
