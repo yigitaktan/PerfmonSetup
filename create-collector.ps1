@@ -99,6 +99,45 @@ Write-Host ""
 Write-Host ""
 
 
+#Set duration
+Do {$global:DurationNumber  = $(Write-Host " Enter data collection duration (sec) " -NoNewLine) + $(Write-Host "(default: 86400)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($global:DurationNumber -match '^[1-9][0-9]{0,5}$') -or (!$global:DurationNumber))
+Write-Host ""
+ If (!$global:DurationNumber) 
+  {
+   Write-Host " [+] 86400 seconds" -ForegroundColor Green 
+   $global:DurationNumber = "86400"
+  }
+ Else 
+  { 
+   If ($global:DurationNumber -eq "1")
+    {
+     Write-Host " [+]" $global:DurationNumber "second" -ForegroundColor Green
+    }
+   Else
+    {
+     Write-Host " [+]" $global:DurationNumber "seconds" -ForegroundColor Green
+    }
+  }
+Write-Host ""
+
+
+#Set restart time
+Do {$global:RestartTime  = $(Write-Host " Enter data collection restart time (12h) " -NoNewLine) + $(Write-Host "(default: 12:30AM)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($global:RestartTime -match '^(1[0-2]|0?[1-9]):([0-5]?[0-9])(●?[AP]M)?$') -or (!$global:RestartTime))
+Write-Host ""
+ If (!$global:RestartTime) 
+  {
+   Write-Host " [+] 12:30AM" -ForegroundColor Green 
+   $global:RestartTime = "12:30AM"
+  }
+ Else 
+  { 
+   Write-Host " [+]" $global:RestartTime -ForegroundColor Green
+  }
+Write-Host ""
+
+
 #Set max log file size
 Do {$global:MaxLogFileSize  = $(Write-Host " Enter maximum log file size in MB " -NoNewLine) + $(Write-Host "(default: 1000)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
 Until (($global:MaxLogFileSize -match '^[1-9][0-9]{2,4}$') -or (!$global:MaxLogFileSize))
