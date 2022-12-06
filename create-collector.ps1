@@ -16,7 +16,7 @@ Import-Module -DisableNameChecking .\functions.psm1
 
 cls
 
-$AppVer = "12.2022.1"
+$AppVer = "12.2022.2"
 
 $global:SqlInstanceMenuArrayList = New-Object -TypeName "System.Collections.ArrayList"
 $global:SqlInstanceMenuArrayList = [System.Collections.ArrayList]@()
@@ -72,8 +72,9 @@ Write-Host ""
 Do {$global:InstanceNumber = Read-Host " Enter selection number (CTRL+C to quit)"}
 Until (($global:InstanceNumber -cle $global:SqlInstanceMenuArrayList.Count) -and ($global:InstanceNumber -match '^[1-9]{1}$' -eq "False"  ))
 {} #-cle cge
-Write-Host " [+]" $global:SqlInstanceArrayList[$global:InstanceNumber - 1]   -ForegroundColor Green
+Write-Host " [+]-" $global:SqlInstanceArrayList[$global:InstanceNumber - 1]   -ForegroundColor Green
 Write-Host ""
+$IfOnlyOneSelected = $global:SqlInstanceArrayList[$global:InstanceNumber - 1]
 
 
 #Set data collection interval
@@ -187,20 +188,72 @@ Write-Host ""
 #Start data collector set?
 Do {$StartCollector = Read-Host " Would you like to start data collector set after created? (Y/N)"}
 Until (($StartCollector -eq "y") -or ($StartCollector -eq "n")) 	    
-   if (!$StartCollector -or $StartCollector -eq "y")
+   If (!$StartCollector -or $StartCollector -eq "y")
     {
      $global:StartCollectorCheck =  1 #"y"
-     Write-Host ""
-	 Write-Host " [+] Yes" -ForegroundColor Green
-	 Write-Host ""
-     Select-SqlInstance
+     Write-Host " [+] Yes" -ForegroundColor Green
     }	   
-   elseif ($StartCollector -eq "n")
+   ElseIf ($StartCollector -eq "n")
     {
      $global:StartCollectorCheck =  0 #"n"
+	   Write-Host " [+] No" -ForegroundColor Green
+    }
+Write-Host ""
+
+
+#Create setup file?
+Do {$CreateUnattendedSetup = Read-Host " Would you like to create a setup file for later use ? [N to created immediately] (Y/N)"}
+Until (($CreateUnattendedSetup -eq "y") -or ($CreateUnattendedSetup -eq "n")) 	    
+   If (!$CreateUnattendedSetup -or $CreateUnattendedSetup -eq "y")
+    {
+      Write-Host ""
+      Write-Host " [+] Yes" -ForegroundColor Green
+      Write-Host ""
+      
+  
+      $ConfigFile = $PSScriptRoot + "\config.txt"
+
+      If (Test-Path $ConfigFile) 
+      {
+        Remove-Item $ConfigFile
+      }
+
+      If ($global:SqlInstanceArrayList -contains "All")
+      {
+        $global:SqlInstanceArrayList.Remove("All")
+      }
+
+      If ($IfOnlyOneSelected -eq "All")
+      {
+        $InstList = $global:SqlInstanceArrayList -join ","
+      }
+      Else
+      {
+        $InstList = $IfOnlyOneSelected
+      }
+
+
+      New-Item $ConfigFile -ItemType File  | Out-Null
+
+      Add-Content $ConfigFile ("instance=" + $InstList)  
+      Add-Content $ConfigFile ("interval=" + $global:IntervalNumber) 
+      Add-Content $ConfigFile ("duration=" + $global:DurationNumber)  
+      Add-Content $ConfigFile ("restart=" + $global:RestartTime)  
+      Add-Content $ConfigFile ("logfilesize=" + $global:MaxLogFileSize)  
+      Add-Content $ConfigFile ("logfilepath=" + $global:LogFilePath)  
+      Add-Content $ConfigFile ("startcheck=" + $global:StartCollectorCheck)  
+
+      $UnattendedFile = $PSScriptRoot + "\unattended-setup.ps1"
+      Create-UnattendedSetupFile($UnattendedFile)
+
+      Compress-SetupFile
+
+    }	   
+   elseif ($CreateUnattendedSetup -eq "n")
+    {
      Write-Host ""
-	 Write-Host " [+] No" -ForegroundColor Green
-	 Write-Host ""
+	   Write-Host " [+] No" -ForegroundColor Green
+	   Write-Host ""
      Select-SqlInstance
     }
 Write-Host ""
