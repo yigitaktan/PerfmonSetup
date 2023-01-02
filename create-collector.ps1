@@ -249,7 +249,7 @@ Until (($CreateUnattendedSetup -eq "y") -or ($CreateUnattendedSetup -eq "n"))
       Compress-SetupFile
 
     }	   
-   elseif ($CreateUnattendedSetup -eq "n")
+   Else
     {
      Write-Host ""
 	   Write-Host " [+] No" -ForegroundColor Green
