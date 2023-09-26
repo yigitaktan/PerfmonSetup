@@ -52,7 +52,7 @@ If you want to see a list of Perfmon counters that you can use within `counter.t
 The script requires administrator privileges.
 If you don't run Command Prompt or PowerShell IDE with administrator privileges, you will encounter the following warning message.
 
-![admin4](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/14f2eb05-9d48-4242-88f5-47e21cb32d81)
+![admin6](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/b3cc9aba-77cf-4f18-b41f-60ec843c986d)
 
 Ensure that all three component files are in the same directory, then execute the script using the following command.
 
@@ -70,6 +70,7 @@ You can easily create the Data Collector Set by answering a few questions sequen
 ![image](https://user-images.githubusercontent.com/51110247/135069078-4c366c8e-b207-4251-84e5-98e995accd44.png)
 
 **[!]** *If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to UTF-16.*
+
 
 
 
