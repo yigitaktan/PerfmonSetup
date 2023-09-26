@@ -66,9 +66,10 @@ After running the script with administrator privileges and the appropriate execu
 
 You can easily create the Data Collector Set by answering a few questions sequentially.
 
-![image](https://user-images.githubusercontent.com/51110247/135069078-4c366c8e-b207-4251-84e5-98e995accd44.png)
+![full2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/29b0ae50-bd55-4d86-a088-5bb5d04f4e95)
 
 **[!]** *If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to UTF-16.*
+
 
 
 
