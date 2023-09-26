@@ -66,7 +66,7 @@ After running the script with administrator privileges and the appropriate execu
 
 You can easily create the Data Collector Set by answering a few questions sequentially.
 
-![full2 - Copy](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/af6018a2-834a-47f5-8e6c-cae5d1b9356a)
+![full3](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/ccb2043e-a85e-4460-9d99-92295872b5ce)
 
 If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to UTF-16.
 
@@ -75,6 +75,3 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
-
-
-
