@@ -2,10 +2,10 @@
 You can easily create Performance Monitor (Perfmon) Data Collector Sets using with this script . All you need to do is answer a few questions according to your criteria. Please note that this script is designed specifically for SQL Server instances. It will not work if there is no SQL Server instance installed on the machine where it is run.
 ## Script Components
 * **[create-collector.ps1](https://github.com/yigitaktan/PerfmonSetup/blob/main/create-collector.ps1):** The primary script
-* **[functions.psm1](https://github.com/yigitaktan/PerfmonSetup/blob/main/functions.psm1):** A function file utilized by the countersetup.ps1 script.
+* **[functions.psm1](https://github.com/yigitaktan/PerfmonSetup/blob/main/functions.psm1):** A function file utilized by the `countersetup.ps1` script.
 * **[counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt):** A list of counters necessary for creating a Data Collector Set.
 ## Preparing the counter set file ([counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt))
-To begin, you need to determine the performance counters from which you want to collect performance data. Specify these counters in the **counterset.txt** file, one per line.
+To begin, you need to determine the performance counters from which you want to collect performance data. Specify these counters in the `**counterset.txt**` file, one per line.
 ```
 \PhysicalDisk(*)\Avg. Disk sec/Read
 \PhysicalDisk(*)\Avg. Disk sec/Write
@@ -23,7 +23,7 @@ When adding counters specific to the SQL Server instance, you should format the 
 
 For example, instead of writing the counter as `\MSSQL$SQL2017:Locks(*)\Lock Wait Time (ms)`, you should write it as `\[MYINSTANCENAME]:Locks(*)\Lock Wait Time (ms)`. The reason for using `[MYINSTANCENAME]` instead of `MSSQL$InstanceName` is that it can be used for servers with multiple instances and for other servers without named instances.
 
-In this case, the sample counterset.txt should be prepared as follows.
+In this case, the sample `counterset.txt` should be prepared as follows.
 ```
 \Processor(*)\% User Time
 \Processor(*)\DPC Rate
@@ -46,10 +46,10 @@ In this case, the sample counterset.txt should be prepared as follows.
 \[MYINSTANCENAME]:Access Methods\Table Lock Escalations/sec
 ```
 
-If you want to see a list of Perfmon counters that you can use within counter.txt, you can use the [Get-Counter](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-counter?view=powershell-7.1) cmdlet.
+If you want to see a list of Perfmon counters that you can use within `counter.txt`, you can use the [Get-Counter](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-counter?view=powershell-7.1) cmdlet.
 
 ## Running the script
-The script requires Administrator privileges.
+The script requires administrator privileges.
 If you don't run Command Prompt or PowerShell IDE with administrator privileges, you will encounter the following warning message.
 
 ![image](https://user-images.githubusercontent.com/51110247/134901242-243be960-6f8f-4379-a853-4c61c9992248.png)
@@ -60,7 +60,7 @@ Ensure that all three component files are in the same directory, then execute th
 
 If you encounter issues with PowerShell execution policy, please refer to this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
 
-After running the script with Administrator privileges and the appropriate execution policy setting, you should see the following screen.
+After running the script with administrator privileges and the appropriate execution policy setting, you should see the following screen.
 
 ![image](https://user-images.githubusercontent.com/51110247/135044020-561dc4a8-6ed8-4bd4-9f2c-9c6094792ae8.png)
 
