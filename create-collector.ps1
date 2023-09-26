@@ -11,158 +11,146 @@
 └─────────┴───────────────────────────────────────────────────────────────────┘
 #>
 
-
 Import-Module -DisableNameChecking .\functions.psm1
 
-cls
+Clear-Host
 
-$AppVer = "12.2022.2"
+$AppVer = "09.2023.1.001"
 
-$global:SqlInstanceMenuArrayList = New-Object -TypeName "System.Collections.ArrayList"
-$global:SqlInstanceMenuArrayList = [System.Collections.ArrayList]@()
-$global:SqlInstanceArrayList = New-Object -TypeName "System.Collections.ArrayList"
-$global:SqlInstanceArrayList = [System.Collections.ArrayList]@()
-$global:StartCollectorList = New-Object -TypeName "System.Collections.ArrayList"
-$global:StartCollectorList = [System.Collections.ArrayList]@()
-
+$Global:SqlInstanceMenuArrayList = New-Object -TypeName "System.Collections.ArrayList"
+$Global:SqlInstanceMenuArrayList = [System.Collections.ArrayList]@()
+$Global:SqlInstanceArrayList = New-Object -TypeName "System.Collections.ArrayList"
+$Global:SqlInstanceArrayList = [System.Collections.ArrayList]@()
+$Global:StartCollectorList = New-Object -TypeName "System.Collections.ArrayList"
+$Global:StartCollectorList = [System.Collections.ArrayList]@()
  
 #Caption
-Write-Host " ╔════════════════════════════════════════════════════════════╗" -ForegroundColor Gray
-Write-Host " ║ Perfmon Data Collector Set Setup for SQL Server instances  ║" -ForegroundColor Gray
-Write-Host " ╠═════════════╦═══════════╦══════════════════════╦═══════════╣" -ForegroundColor Gray
-Write-Host " ║ Yigit Aktan ║ Microsoft ║ yigita@microsoft.com ║" $AppVer "║" -ForegroundColor Gray
-Write-Host " ╚═════════════╩═══════════╩══════════════════════╩═══════════╝" -ForegroundColor Gray
+Write-Host " ╔═════════════════════════════════════════════════════════════════╗" -ForegroundColor Gray
+Write-Host " ║ Setting Up Perfmon Data Collector Set for SQL Server Instances  ║" -ForegroundColor Gray
+Write-Host " ╠═════════════╦═══════════╦══════════════════════╦════════════════╣" -ForegroundColor Gray
+Write-Host " ║ Yigit Aktan ║ Microsoft ║ yigita@microsoft.com ║" $AppVer     " ║" -ForegroundColor Gray
+Write-Host " ╚═════════════╩═══════════╩══════════════════════╩════════════════╝" -ForegroundColor Gray
 Write-Host ""
-
 
 #Administrator permission check
-if (-not([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
+If (-not([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
  {
-  Write-Colr -Text ' [x] ', 'Insufficient permissions to run this script.' -Colour Gray, Red
-  Write-Colr -Text '     Open the PowerShell console as an administrator and run this script again.' -Colour Red
+  Write-Colr -Text ' [x] ', 'You do not have sufficient permissions to execute this script.' -Colour Gray, Red
+  Write-Colr -Text '     Please open the PowerShell console as an administrator and rerun this script.' -Colour Red
   exit
  }
-
 
 #Counter file check
-if (-not(Test-Path -Path $PSScriptRoot\counterset.txt -PathType Leaf)) 
+If (-not(Test-Path -Path $PSScriptRoot\counterset.txt -PathType Leaf)) 
  {
-  Write-Colr -Text ' [x] ', 'Could not find counter set file! (counterset.txt)' -Colour Gray, Red
+  Write-Colr -Text ' [x] ', 'Counter set file not found! (counterset.txt)' -Colour Gray, Red
   exit
  }
 
- 
-#List all SQL instances
+#List all SQL Server instances
 Get-SqlInstances
 
-
 #Check if there is no SQL instance
-if ($global:IsSQL -eq "no")
+If ($Global:IsSQL -eq "no")
  {
-  Write-Colr -Text ' [*] ', 'There is no SQL Server instance on this server!'  -Colour Gray, Red
+  Write-Colr -Text ' [*] ', 'SQL Server instance does not exist on this server!'  -Colour Gray, Red
   exit
  }
 
-
 #Select SQL instance
-Write-Host " Which instance you would like to create Data Collector Set for?" -ForegroundColor Yellow
+Write-Host " For which instance would you like to create a Data Collector Set?" -ForegroundColor Yellow
 Write-Host ""
-$global:SqlInstanceMenuArrayList
+$Global:SqlInstanceMenuArrayList
 Write-Host ""
-Do {$global:InstanceNumber = Read-Host " Enter selection number (CTRL+C to quit)"}
-Until (($global:InstanceNumber -cle $global:SqlInstanceMenuArrayList.Count) -and ($global:InstanceNumber -match '^[1-9]{1}$' -eq "False"  ))
-{} #-cle cge
-Write-Host " [+]-" $global:SqlInstanceArrayList[$global:InstanceNumber - 1]   -ForegroundColor Green
+Do {$Global:InstanceNumber = Read-Host " Please input the selection number (CTRL+C to quit)"}
+Until (($Global:InstanceNumber -cle $Global:SqlInstanceMenuArrayList.Count) -and ($Global:InstanceNumber -match '^[1-9]{1}$' -eq "False"  ))
+{}
+Write-Host " [+]" $Global:SqlInstanceArrayList[$Global:InstanceNumber - 1]   -ForegroundColor Green
 Write-Host ""
-$IfOnlyOneSelected = $global:SqlInstanceArrayList[$global:InstanceNumber - 1]
-
+$IfOnlyOneSelected = $Global:SqlInstanceArrayList[$Global:InstanceNumber - 1]
 
 #Set data collection interval
-Do {$global:IntervalNumber  = $(Write-Host " Enter data collection interval (sec) " -NoNewLine) + $(Write-Host "(default: 15)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
-Until (($global:IntervalNumber -match '^[1-9][0-9]{0,3}$') -or (!$global:IntervalNumber))
+Do {$Global:IntervalNumber  = $(Write-Host " Please enter the data collection interval in seconds " -NoNewLine) + $(Write-Host "(default: 15)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($Global:IntervalNumber -match '^[1-9][0-9]{0,3}$') -or (!$Global:IntervalNumber))
 Write-Host ""
- If (!$global:IntervalNumber) 
+ If (!$Global:IntervalNumber) 
   {
    Write-Host " [+] 15 seconds" -ForegroundColor Green 
-   $global:IntervalNumber = "15"
+   $Global:IntervalNumber = "15"
   }
  Else 
   { 
-   If ($global:IntervalNumber -eq "1")
+   If ($Global:IntervalNumber -eq "1")
     {
-     Write-Host " [+]" $global:IntervalNumber "second" -ForegroundColor Green
+     Write-Host " [+]" $Global:IntervalNumber "second" -ForegroundColor Green
     }
    Else
     {
-     Write-Host " [+]" $global:IntervalNumber "seconds" -ForegroundColor Green
+     Write-Host " [+]" $Global:IntervalNumber "seconds" -ForegroundColor Green
     }
   }
 Write-Host ""
-
 
 #Set duration
-Do {$global:DurationNumber  = $(Write-Host " Enter data collection duration (sec) " -NoNewLine) + $(Write-Host "(default: 86400)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
-Until (($global:DurationNumber -match '^[1-9][0-9]{0,5}$') -or (!$global:DurationNumber))
+Do {$Global:DurationNumber  = $(Write-Host " Please input the data collection duration in seconds " -NoNewLine) + $(Write-Host "(default: 86400)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($Global:DurationNumber -match '^[1-9][0-9]{0,5}$') -or (!$Global:DurationNumber))
 Write-Host ""
- If (!$global:DurationNumber) 
+ If (!$Global:DurationNumber) 
   {
    Write-Host " [+] 86400 seconds" -ForegroundColor Green 
-   $global:DurationNumber = "86400"
+   $Global:DurationNumber = "86400"
   }
  Else 
   { 
-   If ($global:DurationNumber -eq "1")
+   If ($Global:DurationNumber -eq "1")
     {
-     Write-Host " [+]" $global:DurationNumber "second" -ForegroundColor Green
+     Write-Host " [+]" $Global:DurationNumber "second" -ForegroundColor Green
     }
    Else
     {
-     Write-Host " [+]" $global:DurationNumber "seconds" -ForegroundColor Green
+     Write-Host " [+]" $Global:DurationNumber "seconds" -ForegroundColor Green
     }
   }
 Write-Host ""
 
-
 #Set restart time
-Do {$global:RestartTime  = $(Write-Host " Enter data collection restart time (12h) " -NoNewLine) + $(Write-Host "(default: 12:30AM)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
-Until (($global:RestartTime -match '^(1[0-2]|0?[1-9]):([0-5]?[0-9])(●?[AP]M)?$') -or (!$global:RestartTime))
+Do {$Global:RestartTime  = $(Write-Host " Please specify the data collection restart time (12h format) " -NoNewLine) + $(Write-Host "(default: 12:01AM)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($Global:RestartTime -match '^(1[0-2]|0?[1-9]):[0-5]?[0-9](AM|PM)$') -or (!$Global:RestartTime))
 Write-Host ""
- If (!$global:RestartTime) 
+ If (!$Global:RestartTime) 
   {
-   Write-Host " [+] 12:30AM" -ForegroundColor Green 
-   $global:RestartTime = "12:30AM"
+   Write-Host " [+] 12:01AM" -ForegroundColor Green 
+   $Global:RestartTime = "12:01AM"
   }
  Else 
   { 
-   Write-Host " [+]" $global:RestartTime -ForegroundColor Green
+   Write-Host " [+]" $Global:RestartTime.ToUpper() -ForegroundColor Green
   }
 Write-Host ""
-
 
 #Set max log file size
-Do {$global:MaxLogFileSize  = $(Write-Host " Enter maximum log file size in MB " -NoNewLine) + $(Write-Host "(default: 1000)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
-Until (($global:MaxLogFileSize -match '^[1-9][0-9]{2,4}$') -or (!$global:MaxLogFileSize))
+Do {$Global:MaxLogFileSize  = $(Write-Host " Please enter the maximum log file size in megabytes (MB) " -NoNewLine) + $(Write-Host "(default: 1000)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($Global:MaxLogFileSize -match '^[1-9][0-9]{2,4}$') -or (!$Global:MaxLogFileSize))
 Write-Host ""
- if (!$global:MaxLogFileSize)
+ If (!$Global:MaxLogFileSize)
   {
    Write-Host " [+] 1000 MB" -ForegroundColor Green
-   $global:MaxLogFileSize = "1000"
+   $Global:MaxLogFileSize = "1000"
   }
- else 
+ Else 
   { 
-   Write-Host " [+]" $global:MaxLogFileSize "MB" -ForegroundColor Green
+   Write-Host " [+]" $Global:MaxLogFileSize "MB" -ForegroundColor Green
   }
 Write-Host ""
-
 
 #Set BLG file path
-Do {$global:LogFilePath  = $(Write-Host " Enter output (*.blg) file path " -NoNewLine) + $(Write-Host "(default: C:\perfmon_data)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
-Until (($global:LogFilePath -match '(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:"/\\|?*])|\/(?![\0-\37<>:"/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:"/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:"/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:"/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:"/\\|?*]+))((\\|\/)[^\0-\37<>:"/\\|?*]+|(\\|\/)$)*()$') -or (!$global:LogFilePath))
+Do {$Global:LogFilePath  = $(Write-Host " Please enter the output (*.blg) file path " -NoNewLine) + $(Write-Host "(default: C:\perfmon_data)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($Global:LogFilePath -match '(^([a-z]|[A-Z]):(?=\\(?![\0-\37<>:"/\\|?*])|\/(?![\0-\37<>:"/\\|?*])|$)|^\\(?=[\\\/][^\0-\37<>:"/\\|?*]+)|^(?=(\\|\/)$)|^\.(?=(\\|\/)$)|^\.\.(?=(\\|\/)$)|^(?=(\\|\/)[^\0-\37<>:"/\\|?*]+)|^\.(?=(\\|\/)[^\0-\37<>:"/\\|?*]+)|^\.\.(?=(\\|\/)[^\0-\37<>:"/\\|?*]+))((\\|\/)[^\0-\37<>:"/\\|?*]+|(\\|\/)$)*()$') -or (!$Global:LogFilePath))
 Write-Host ""
- if (!$global:LogFilePath)
+ If (!$Global:LogFilePath)
   {
-   $global:LogFilePath = "C:\perfmon_data"
-   If (Test-Path $global:LogFilePath)
+   $Global:LogFilePath = "C:\perfmon_data"
+   If (Test-Path $Global:LogFilePath)
     {
      Write-Host " [+] C:\perfmon_data" -ForegroundColor Green      
     }
@@ -173,36 +161,77 @@ Write-Host ""
   }
  Else 
   { 
-   If (Test-Path $global:LogFilePath)
+   If (Test-Path $Global:LogFilePath)
     {
-     Write-Host " [+]" $global:LogFilePath -ForegroundColor Green 
+     Write-Host " [+]" $Global:LogFilePath -ForegroundColor Green 
     }
    Else
     {
-     Write-Host " [+]" $global:LogFilePath "(Folder will be created)" -ForegroundColor Green 
+     Write-Host " [+]" $Global:LogFilePath "(Folder will be created)" -ForegroundColor Green 
     }   
   }
 Write-Host ""
 
+#Delete BLG files
+Do {$Global:DeleteOlderBlgFiles  = $(Write-Host " How many days old BLG files would you like to delete? " -NoNewLine) + $(Write-Host "(default: 30, Don't delete: 0)" -ForegroundColor yellow -NoNewLine) + $(Write-Host ": " -NoNewLine; Read-Host) }
+Until (($Global:DeleteOlderBlgFiles -match '^(730|[0-6]?[0-9]{1,2}|0)$') -or (!$Global:DeleteOlderBlgFiles))
+Write-Host ""
+ If (!$Global:DeleteOlderBlgFiles)
+  {
+   Write-Host " [+] 30 days" -ForegroundColor Green
+   $Global:DeleteOlderBlgFiles = "30"
+  }
+ ElseIf ($Global:DeleteOlderBlgFiles -eq 0) 
+  {
+   Write-Host "Files will not be deleted" -ForegroundColor Green
+  } 
+ Else
+  {
+   If ($Global:DeleteOlderBlgFiles -eq 1) 
+    {
+     Write-Host " [+]" $Global:DeleteOlderBlgFiles "day" -ForegroundColor Green
+    }
+   Else
+    {
+     Write-Host " [+]" $Global:DeleteOlderBlgFiles "days" -ForegroundColor Green
+    }   
+  }
+Write-Host ""
 
-#Start data collector set?
-Do {$StartCollector = Read-Host " Would you like to start data collector set after created? (Y/N)"}
-Until (($StartCollector -eq "y") -or ($StartCollector -eq "n")) 	    
+#Start Data Collector Set?
+Do {$StartCollector = Read-Host " Would you like to start the data collector set after it's created (Y/N)"}
+Until (($StartCollector -eq "y") -or ($StartCollector -eq "n")) 
+Write-Host ""
    If (!$StartCollector -or $StartCollector -eq "y")
     {
-     $global:StartCollectorCheck =  1 #"y"
+     $Global:StartCollectorCheck =  1 #"y"
      Write-Host " [+] Yes" -ForegroundColor Green
     }	   
    ElseIf ($StartCollector -eq "n")
     {
-     $global:StartCollectorCheck =  0 #"n"
+     $Global:StartCollectorCheck =  0 #"n"
+	  Write-Host " [+] No" -ForegroundColor Green
+    }
+Write-Host ""
+
+#Start Data Collector Set automatically?
+Do {$StartCollectorAutomatically = Read-Host " Would you like the Data Collector Set to start automatically in case of a server restart? (Y/N)"}
+Until (($StartCollectorAutomatically -eq "y") -or ($StartCollectorAutomatically -eq "n")) 
+Write-Host ""
+   If (!$StartCollectorAutomatically -or $StartCollectorAutomatically -eq "y")
+    {
+     $Global:StartCollectorAutomaticallyCheck =  1 #"y"
+     Write-Host " [+] Yes (In order to automate the process, a new task will be created within Task Scheduler)" -ForegroundColor Green
+    }	   
+   ElseIf ($StartCollectorAutomatically -eq "n")
+    {
+     $Global:StartCollectorAutomaticallyCheck =  0 #"n"
 	   Write-Host " [+] No" -ForegroundColor Green
     }
 Write-Host ""
 
-
 #Create setup file?
-Do {$CreateUnattendedSetup = Read-Host " Would you like to create a setup file for later use ? [N to created immediately] (Y/N)"}
+Do {$CreateUnattendedSetup = Read-Host " Would you like to create a setup file for later use? [N to create immediately] (Y/N)"}
 Until (($CreateUnattendedSetup -eq "y") -or ($CreateUnattendedSetup -eq "n")) 	    
    If (!$CreateUnattendedSetup -or $CreateUnattendedSetup -eq "y")
     {
@@ -214,42 +243,42 @@ Until (($CreateUnattendedSetup -eq "y") -or ($CreateUnattendedSetup -eq "n"))
       $ConfigFile = $PSScriptRoot + "\config.txt"
 
       If (Test-Path $ConfigFile) 
-      {
+       {
         Remove-Item $ConfigFile
-      }
+       }
 
-      If ($global:SqlInstanceArrayList -contains "All")
-      {
-        $global:SqlInstanceArrayList.Remove("All")
-      }
+      If ($Global:SqlInstanceArrayList -contains "All")
+       {
+        $Global:SqlInstanceArrayList.Remove("All")
+       }
 
       If ($IfOnlyOneSelected -eq "All")
-      {
-        $InstList = $global:SqlInstanceArrayList -join ","
-      }
+       {
+        $InstList = $Global:SqlInstanceArrayList -join ","
+       }
       Else
-      {
+       {
         $InstList = $IfOnlyOneSelected
-      }
-
+       }
 
       New-Item $ConfigFile -ItemType File  | Out-Null
 
       Add-Content $ConfigFile ("instance=" + $InstList)  
-      Add-Content $ConfigFile ("interval=" + $global:IntervalNumber) 
-      Add-Content $ConfigFile ("duration=" + $global:DurationNumber)  
-      Add-Content $ConfigFile ("restart=" + $global:RestartTime)  
-      Add-Content $ConfigFile ("logfilesize=" + $global:MaxLogFileSize)  
-      Add-Content $ConfigFile ("logfilepath=" + $global:LogFilePath)  
-      Add-Content $ConfigFile ("startcheck=" + $global:StartCollectorCheck)  
+      Add-Content $ConfigFile ("interval=" + $Global:IntervalNumber) 
+      Add-Content $ConfigFile ("duration=" + $Global:DurationNumber)  
+      Add-Content $ConfigFile ("restart=" + $Global:RestartTime)  
+      Add-Content $ConfigFile ("logfilesize=" + $Global:MaxLogFileSize)  
+      Add-Content $ConfigFile ("logfilepath=" + $Global:LogFilePath)  
+      Add-Content $ConfigFile ("startcheck=" + $Global:StartCollectorCheck)  
+      Add-Content $ConfigFile ("startautocheck=" + $Global:StartCollectorAutomaticallyCheck)
+      Add-Content $ConfigFile ("deletexdaysolderblgfiles=" + $Global:DeleteOlderBlgFiles)
 
       $UnattendedFile = $PSScriptRoot + "\unattended-setup.ps1"
       Create-UnattendedSetupFile($UnattendedFile)
 
       Compress-SetupFile
-
     }	   
-   Elseif ($CreateUnattendedSetup -eq "n")
+   ElseIf ($CreateUnattendedSetup -eq "n")
     {
      Write-Host ""
 	   Write-Host " [+] No" -ForegroundColor Green
