@@ -36,8 +36,8 @@ Write-Host ""
 If (-not([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
  {
   Write-Colr -Text ' [x] ', 'You do not have sufficient permissions to execute this script.' -Colour Gray, Red
-  Write-Colr -Text '     Please open the PowerShell console as an administrator and rerun this script.' -Colour Red
-  exit
+  Write-Colr -Text '     Please open the PowerShell console or Command Prompt as an administrator and rerun this script.' -Colour Red
+  Exit
  }
 
 #Counter file check
@@ -183,7 +183,7 @@ Write-Host ""
   }
  ElseIf ($Global:DeleteOlderBlgFiles -eq 0) 
   {
-   Write-Host "Files will not be deleted" -ForegroundColor Green
+   Write-Host " [+] Files will not be deleted" -ForegroundColor Green
   } 
  Else
   {
@@ -204,12 +204,12 @@ Until (($StartCollector -eq "y") -or ($StartCollector -eq "n"))
 Write-Host ""
    If (!$StartCollector -or $StartCollector -eq "y")
     {
-     $Global:StartCollectorCheck =  1 #"y"
+     $Global:StartCollectorCheck =  1
      Write-Host " [+] Yes" -ForegroundColor Green
     }	   
    ElseIf ($StartCollector -eq "n")
     {
-     $Global:StartCollectorCheck =  0 #"n"
+     $Global:StartCollectorCheck =  0
 	  Write-Host " [+] No" -ForegroundColor Green
     }
 Write-Host ""
@@ -220,12 +220,12 @@ Until (($StartCollectorAutomatically -eq "y") -or ($StartCollectorAutomatically 
 Write-Host ""
    If (!$StartCollectorAutomatically -or $StartCollectorAutomatically -eq "y")
     {
-     $Global:StartCollectorAutomaticallyCheck =  1 #"y"
+     $Global:StartCollectorAutomaticallyCheck =  1
      Write-Host " [+] Yes (In order to automate the process, a new task will be created within Task Scheduler)" -ForegroundColor Green
     }	   
    ElseIf ($StartCollectorAutomatically -eq "n")
     {
-     $Global:StartCollectorAutomaticallyCheck =  0 #"n"
+     $Global:StartCollectorAutomaticallyCheck =  0
 	   Write-Host " [+] No" -ForegroundColor Green
     }
 Write-Host ""
