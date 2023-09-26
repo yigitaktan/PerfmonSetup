@@ -5,7 +5,7 @@ You can easily create Performance Monitor (Perfmon) Data Collector Sets using wi
 * **[functions.psm1](https://github.com/yigitaktan/PerfmonSetup/blob/main/functions.psm1):** A function file utilized by the `countersetup.ps1` script.
 * **[counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt):** A list of counters necessary for creating a Data Collector Set.
 ## Preparing the counter set file ([counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt))
-To begin, you need to determine the performance counters from which you want to collect performance data. Specify these counters in the `**counterset.txt**` file, one per line.
+To begin, you need to determine the performance counters from which you want to collect performance data. Specify these counters in the `counterset.txt` file, one per line.
 ```
 \PhysicalDisk(*)\Avg. Disk sec/Read
 \PhysicalDisk(*)\Avg. Disk sec/Write
