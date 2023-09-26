@@ -72,6 +72,6 @@ If you encounter character encoding errors when running the script, it might hav
 
 ![hata2 - Copy](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/c49850d0-9926-4567-97f1-a95aa4eb5a35)
 
-
+If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc6](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/6add5856-f411-4560-ae4d-279951c38837)
