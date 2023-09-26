@@ -62,14 +62,14 @@ If you encounter issues with PowerShell execution policy, please refer to this l
 
 After running the script with administrator privileges and the appropriate execution policy setting, you should see the following screen.
 
-![main2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/aa20fb1a-b670-4200-9c4e-274dec1136d5)
-![image](https://user-images.githubusercontent.com/51110247/135044020-561dc4a8-6ed8-4bd4-9f2c-9c6094792ae8.png)
+![main4](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/eafdfc3e-ebf3-4af4-9fac-f6e832660e5b)
 
 You can easily create the Data Collector Set by answering a few questions sequentially.
 
 ![image](https://user-images.githubusercontent.com/51110247/135069078-4c366c8e-b207-4251-84e5-98e995accd44.png)
 
 **[!]** *If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to UTF-16.*
+
 
 
 
