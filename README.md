@@ -52,8 +52,7 @@ If you want to see a list of Perfmon counters that you can use within `counter.t
 The script requires administrator privileges.
 If you don't run Command Prompt or PowerShell IDE with administrator privileges, you will encounter the following warning message.
 
-![admin_permission](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/090911b4-16aa-4bbf-adf3-1fb2c28e33a5)
-![image](https://user-images.githubusercontent.com/51110247/134901242-243be960-6f8f-4379-a853-4c61c9992248.png)
+![image](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/090911b4-16aa-4bbf-adf3-1fb2c28e33a5)
 
 Ensure that all three component files are in the same directory, then execute the script using the following command.
 
