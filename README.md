@@ -1,11 +1,11 @@
-# Perfmon Data Collector Set creation for SQL Server instances
-You can easily create Perfmon Data Collector Sets for multiple SQL instances at the same time with the counters you specify without being dependent on the instance name.
-## Components of the script
-* **[create-collector.ps1](https://github.com/yigitaktan/PerfmonSetup/blob/main/create-collector.ps1):** Main script
-* **[functions.psm1](https://github.com/yigitaktan/PerfmonSetup/blob/main/functions.psm1):** Function file used by countersetup.ps1 script.
-* **[counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt):** List of counters required to create a Data Collector Set.
-## Preparing counter set file ([counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt))
-First of all, you must determine the counters where you want to collect performance data from. You should specify these counters in the **counterset.txt** file, one per line.
+# Setting Up Perfmon Data Collector Set for SQL Server Instances
+You can easily create Performance Monitor (Perfmon) Data Collector Sets using with this script . All you need to do is answer a few questions according to your criteria. Please note that this script is designed specifically for SQL Server instances. It will not work if there is no SQL Server instance installed on the machine where it is run.
+## Script Components
+* **[create-collector.ps1](https://github.com/yigitaktan/PerfmonSetup/blob/main/create-collector.ps1):** The primary script
+* **[functions.psm1](https://github.com/yigitaktan/PerfmonSetup/blob/main/functions.psm1):** A function file utilized by the countersetup.ps1 script.
+* **[counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt):** A list of counters necessary for creating a Data Collector Set.
+## Preparing the counter set file ([counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt))
+To begin, you need to determine the performance counters from which you want to collect performance data. Specify these counters in the **counterset.txt** file, one per line.
 ```
 \PhysicalDisk(*)\Avg. Disk sec/Read
 \PhysicalDisk(*)\Avg. Disk sec/Write
@@ -19,9 +19,9 @@ First of all, you must determine the counters where you want to collect performa
 \Process(*)\IO Other Operations/sec
 ```
 
-When you want to add counters specific to the SQL Server instance, you should write the counters to the file differently as follows.
+When adding counters specific to the SQL Server instance, you should format the counters in the following way.
 
-For example, you should write the counter named `\MSSQL$SQL2017:Locks(*)\Lock Wait Time (ms)` as `\[MYINSTANCENAME]:Locks(*)\Lock Wait Time (ms)`. The reason why it is specified as `[MYINSTANCENAME]` rather than `MSSQL$InstanceName` is that it can be used both for servers with more than one instance and for other servers regardless of the named instances.
+For example, instead of writing the counter as `\MSSQL$SQL2017:Locks(*)\Lock Wait Time (ms)`, you should write it as `\[MYINSTANCENAME]:Locks(*)\Lock Wait Time (ms)`. The reason for using `[MYINSTANCENAME]` instead of `MSSQL$InstanceName` is that it can be used for servers with multiple instances and for other servers without named instances.
 
 In this case, the sample counterset.txt should be prepared as follows.
 ```
@@ -46,26 +46,26 @@ In this case, the sample counterset.txt should be prepared as follows.
 \[MYINSTANCENAME]:Access Methods\Table Lock Escalations/sec
 ```
 
-If you need to get the list of counters, please use [Get-Counter](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-counter?view=powershell-7.1) cmdlet.
+If you want to see a list of Perfmon counters that you can use within counter.txt, you can use the [Get-Counter](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.diagnostics/get-counter?view=powershell-7.1) cmdlet.
 
 ## Running the script
-Script must be run as Administrator.
-If you do not run Command Prompt or PowerShell IDE with Administrator privilege, you will see the following warning message.
+The script requires Administrator privileges.
+If you don't run Command Prompt or PowerShell IDE with administrator privileges, you will encounter the following warning message.
 
 ![image](https://user-images.githubusercontent.com/51110247/134901242-243be960-6f8f-4379-a853-4c61c9992248.png)
 
-Make sure all 3 component files are in the same folder. Then run the script with the following command.
+Ensure that all three component files are in the same directory, then execute the script using the following command.
 
 `powershell.exe -File .\create-collector.ps1`
 
-If you are having problems with PowerShell execution policy, please check this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
+If you encounter issues with PowerShell execution policy, please refer to this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
 
-The following screen will appear when you run the script with Administrator privilege and the right execution policy setting you need.
+After running the script with Administrator privileges and the appropriate execution policy setting, you should see the following screen.
 
 ![image](https://user-images.githubusercontent.com/51110247/135044020-561dc4a8-6ed8-4bd4-9f2c-9c6094792ae8.png)
 
-You can easily create the Data Collector Set after answering a few questions in order.
+You can easily create the Data Collector Set by answering a few questions sequentially.
 
 ![image](https://user-images.githubusercontent.com/51110247/135069078-4c366c8e-b207-4251-84e5-98e995accd44.png)
 
-**[!]** *If you are getting character errors when you run the script, save the files as UTF-16 encoding standard and try again.*
+**[!]** *If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to UTF-16.*
