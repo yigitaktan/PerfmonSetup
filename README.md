@@ -74,4 +74,4 @@ If you encounter character encoding errors when running the script, it might hav
 
 
 
-![enc4](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/64aaa002-2d48-4f51-9e26-2f86549d66f3)
+![enc6](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/6add5856-f411-4560-ae4d-279951c38837)
