@@ -53,7 +53,6 @@ The script requires administrator privileges.
 If you don't run Command Prompt or PowerShell IDE with administrator privileges, you will encounter the following warning message.
 
 ![admin4](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/14f2eb05-9d48-4242-88f5-47e21cb32d81)
-![image](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/2072056d-a32a-4b37-8005-33d3fc70e6ce)
 
 Ensure that all three component files are in the same directory, then execute the script using the following command.
 
