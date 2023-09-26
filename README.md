@@ -63,7 +63,7 @@ If you encounter issues with PowerShell execution policy, please refer to this l
 
 After running the script with administrator privileges and the appropriate execution policy setting, you should see the following screen.
 
-![main4](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/369bd6bf-6194-4721-a057-7499f3c899f2)
+![main5](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/33ba9dc0-a4cf-4fd9-bbda-0e0258e014e2)
 
 You can easily create the Data Collector Set by answering a few questions sequentially.
 
@@ -76,3 +76,6 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
+
+
+
