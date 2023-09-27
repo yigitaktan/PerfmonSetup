@@ -75,7 +75,7 @@ To create the unattended file, you need to answer '**Y**' (Yes) to the last ques
 
 As seen in the screenshot below, upon completion of the creation process, a 9KB ZIP file is generated. All you need to do is extract this file.
 
-[f1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/062ccb33-f628-4883-a727-2044764ba709)
+![f1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/062ccb33-f628-4883-a727-2044764ba709)
 
 "When you extract the perfmonfile.zip file, you will encounter three files:
 
