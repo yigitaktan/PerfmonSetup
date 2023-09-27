@@ -76,12 +76,11 @@ To create the unattended file, you need to answer '**Y**' (Yes) to the last ques
 As seen in the screenshot below, upon completion of the creation process, a 9KB ZIP file is generated. All you need to do is extract this file.
 
 ![folder2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/0d7d0540-ef69-46c7-8079-8f4fc8a5ca16)
-![aaa](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/0be09d73-16a4-4d45-a8e9-57f129192529)
 
 ## Execution Policy errors
 If you encounter issues with PowerShell execution policy, please refer to this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
 
-![policy1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/d83ce0a7-a290-4a65-baea-ac2f289ba9e3)
+![policy3](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/7998c758-3d73-457a-9857-b686f354f12f)
 
 ## Encoding errors
 If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download, and you have likely encountered errors similar to the screenshot below. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to **UTF-16**.
@@ -91,6 +90,7 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
+
 
 
 
