@@ -71,6 +71,7 @@ If you need to deploy the Data Collector Set across multiple SQL Server environm
 
 To create the unattended file, you need to answer 'Y' (Yes) to the last question (**Would you like to create a setup file for later use?**). After this step, all the criteria you previously set will be added to `config.txt`, and compressed along with the `unattended-setup.ps1` script to create a file named `perfmonfile.zip`. The location of this file, as shown in the screenshot below, will be in the same path as your existing script.
 
+![unattend2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/2e2ffeda-2efb-4070-bca9-bd61f632c9c5)
 ![unattend2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/ede22f57-68d8-4257-81e9-a80412bcfdc4)
 
 ## Execution Policy errors
@@ -86,3 +87,4 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
+
