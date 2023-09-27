@@ -5,7 +5,7 @@
 * **[Preparing the counter set file](#Preparing-the-counter-set-file)**
 * **[Running the script](#Running-the-script)**
 * **[Unattended file creation](#Unattended-file-creation)**
-*    **[config.txt file](#configtxt-file)**
+   * **[config.txt file](#configtxt-file)**
 * **[Execution Policy errors](#Execution-Policy-errors)**
 * **[Encoding errors](#Encoding-errors)**
 
