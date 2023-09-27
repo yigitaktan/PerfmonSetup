@@ -81,7 +81,7 @@ If you need to deploy the Data Collector Set across multiple SQL Server environm
 
 To create the unattended file, you need to answer '**Y**' (Yes) to the last question (**Would you like to create a setup file for later use?**). After this step, all the criteria you previously set will be added to `config.txt`, and compressed along with the `unattended-setup.ps1` script to create a file named `perfmonfile.zip`. The location of this file, as shown in the screenshot below, will be in the same path as your existing script.
 
-![un1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/381cc0b5-2f79-448d-8333-538821658d4a)
+![uno1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/a6b9154e-800c-44ab-8f36-ebbe8ce4af07)
 
 As seen in the screenshot below, upon completion of the creation process, a 9KB ZIP file is generated. All you need to do is extract this file.
 
@@ -107,7 +107,8 @@ The config.txt file consists of 9 parameters:
 * **interval**: Determines how often the Data Collector Set collects data, specified in seconds as a numerical value.
 * **duration**: Specifies the duration for which the Data Collector Set will run, given in seconds. For example, if you want it to run for 24 hours, you should input 86400.
 * **restart**: You may want to prevent collected data from being written to the same file and create a separate file for each day. Therefore, the Data Collector Set needs to be restarted at specific times each day. This parameter defines the time for restart in the specified format, e.g., 12:30AM, 10:00PM.
-* **logfilesize**: Specifies the size of the BLG files to be created in MB, as a numerical value.
+* **logfilesize**: Specifies the size of the BLG files to be created in MB, as a numerical value.![uno1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/87f5519b-2731-4dab-95d5-12b1b44f7fb9)
+
 * **logfilepath**: Determines the location where BLG files will be stored.
 * **startcheck**: If you want the Data Collector Set to start as soon as the deployment process is completed, set this parameter to 1; otherwise, set it to 0.
 * **startautocheck**: This parameter automatically starts the Data Collector Set if it stops under any circumstances. It creates a task in Task Scheduler to check and restart it every 5 minutes.
