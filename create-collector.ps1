@@ -15,7 +15,7 @@ Import-Module -DisableNameChecking .\functions.psm1
 
 Clear-Host
 
-$AppVer = "09.2023.1.001"
+$AppVer = "09.2023.1.002"
 
 $Global:SqlInstanceMenuArrayList = New-Object -TypeName "System.Collections.ArrayList"
 $Global:SqlInstanceMenuArrayList = [System.Collections.ArrayList]@()
