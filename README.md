@@ -69,7 +69,7 @@ You can easily create the Data Collector Set by answering a few questions sequen
 ![full3](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/ccb2043e-a85e-4460-9d99-92295872b5ce)
 
 ## Encoding errors
-If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to **UTF-16**.
+If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download, and you have likely encountered errors similar to the screenshot below. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to **UTF-16**.
 
 ![hata4](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/a4799a08-fc26-49cd-8106-b7384b1e0dc3)
 
