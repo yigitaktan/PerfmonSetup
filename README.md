@@ -71,6 +71,8 @@ If you need to deploy the Data Collector Set across multiple SQL Server environm
 
 To create the unattended file, you need to answer 'Y' (Yes) to the last question (**Would you like to create a setup file for later use?**). After this step, all the criteria you previously set will be added to `config.txt`, and compressed along with the `unattended-setup.ps1` script to create a file named `perfmonfile.zip`. The location of this file, as shown in the screenshot below, will be in the same path as your existing script.
 
+![unattend2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/ede22f57-68d8-4257-81e9-a80412bcfdc4)
+
 ## Execution Policy errors
 If you encounter issues with PowerShell execution policy, please refer to this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
 
