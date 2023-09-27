@@ -58,7 +58,7 @@ Ensure that all three component files are in the same directory, then execute th
 
 `powershell.exe -File .\create-collector.ps1`
 
-After running the script with administrator privileges and the appropriate execution policy setting Click for [here](#Execution Policy errors) section, you should see the following screen.
+After running the script with administrator privileges and the appropriate execution policy setting Click for [here](#Execution-Policy-errors) section, you should see the following screen.
 
 ![main5](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/33ba9dc0-a4cf-4fd9-bbda-0e0258e014e2)
 
