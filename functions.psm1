@@ -92,9 +92,7 @@ Function Write-Colr
 Function AllDone
  {
   Write-Host ""
-  Write-Host " ┌─────────────────────────────────────────────────────────────────┐" -ForegroundColor DarkCyan
-  Write-Colr -Text ' │', '                      Successfully Completed                     ', '│' -Colour DarkCyan, Gray, DarkCyan
-  Write-Host " └─────────────────────────────────────────────────────────────────┘" -ForegroundColor DarkCyan
+  Write-Colr -Text ' [>]', ' Successfully Completed!' -Colour Cyan, DarkCyan
  }
 
 #Delete BLG if exists
@@ -110,6 +108,15 @@ Function Delete-BlgFile([String] $Instance)
 #Select SQL Server instance(s)
 Function Select-SqlInstance
  {
+  Clear-Host
+  
+  Write-Host " ╔═════════════════════════════════════════════════════════════════╗" -ForegroundColor Gray
+  Write-Host " ║ Setting Up Perfmon Data Collector Set for SQL Server Instances  ║" -ForegroundColor Gray
+  Write-Host " ╠═════════════╦═══════════╦══════════════════════╦════════════════╣" -ForegroundColor Gray
+  Write-Host " ║ Yigit Aktan ║ Microsoft ║ yigita@microsoft.com ║" $AppVer     " ║" -ForegroundColor Gray
+  Write-Host " ╚═════════════╩═══════════╩══════════════════════╩════════════════╝" -ForegroundColor Gray
+  Write-Host ""
+
   $Global:GenerateRandomNum = (Get-Random -Minimum 100 -Maximum 1000)	 
   If (($Global:SqlInstanceArrayList[$Global:InstanceNumber - 1] -ne "All") -and ($Global:SqlInstanceArrayList[$Global:InstanceNumber - 1] -ne "MSSQLSERVER")) #If single named instance selected   
    {
@@ -120,11 +127,12 @@ Function Select-SqlInstance
     Create-DataCollectorSet -InstanceName $Global:SelectedInstance -OutputFolder $Global:LogFilePath -Interval $Global:IntervalNumber -Duration $Global:DurationNumber -Restart $Global:RestartTime -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $Global:StartCollectorCheck -MaxFileSize $Global:MaxLogFileSize
                     
     If ($Global:StartCollectorList -notcontains $Global:SelectedInstance){ $Global:StartCollectorList.Add($Global:SelectedInstance) > $null }
-    Write-Host " [*] Data Collector Set creating for" $Global:SelectedInstance -ForegroundColor DarkYellow
-    (Write-Host " [*] Data Collector Set named " -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host $Global:CollectorDisplayName -ForegroundColor Yellow -NoNewLine) + $(Write-Host " has been created" -ForegroundColor DarkYellow)
+    (Write-Host " [*]" -ForegroundColor Magenta -NoNewLine) + $(Write-Host " Data Collector Set creating for '" -ForegroundColor Gray -NoNewLine) + $(Write-Host $Global:SelectedInstance -ForegroundColor Gray -NoNewLine) + $(Write-Host "' instance." -ForegroundColor Gray)
+	(Write-Host " [+]" -ForegroundColor Green -NoNewLine) + $(Write-Host " Data Collector Set named '" -ForegroundColor Gray -NoNewLine) + $(Write-Host $Global:CollectorDisplayName -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host "' has been created." -ForegroundColor Gray) 
+
 	 If (($Global:StartCollectorAutomaticallyCheck -eq 1) -or ($Global:DeleteOlderBlgFiles -ge 1)) 
 	  {
-	   Create-ScheduledTask -DcsName $Global:CollectorDisplayName 
+	   Create-ScheduledTask -DcsName $Global:CollectorDisplayName
 	  }
    } 
   ElseIf ($Global:SqlInstanceArrayList[$Global:InstanceNumber - 1] -eq "MSSQLSERVER") #If default instance selected
@@ -136,11 +144,12 @@ Function Select-SqlInstance
     Create-DataCollectorSet -InstanceName $Global:SelectedInstance -OutputFolder $Global:LogFilePath -Interval $Global:IntervalNumber -Duration $Global:DurationNumber -Restart $Global:RestartTime -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $Global:StartCollectorCheck -MaxFileSize $Global:MaxLogFileSize
                
     If ($Global:StartCollectorList -notcontains $Global:SelectedInstance){ $Global:StartCollectorList.Add($Global:SelectedInstance) > $null }
-    Write-Host " [*] Data Collector Set creating for" $Global:SelectedInstance -ForegroundColor DarkYellow
-    (Write-Host " [*] Data Collector Set named " -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host $Global:CollectorDisplayName -ForegroundColor Yellow -NoNewLine) + $(Write-Host " has been created" -ForegroundColor DarkYellow)
-	 If (($Global:StartCollectorAutomaticallyCheck -eq 1) -or ($Global:DeleteOlderBlgFiles -ge 1)) 
+    (Write-Host " [*]" -ForegroundColor Magenta -NoNewLine) + $(Write-Host " Data Collector Set creating for '" -ForegroundColor Gray -NoNewLine) + $(Write-Host $Global:SelectedInstance -ForegroundColor Gray -NoNewLine) + $(Write-Host "' instance." -ForegroundColor Gray)
+	(Write-Host " [+]" -ForegroundColor Green -NoNewLine) + $(Write-Host " Data Collector Set named '" -ForegroundColor Gray -NoNewLine) + $(Write-Host $Global:CollectorDisplayName -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host "' has been created." -ForegroundColor Gray) 
+	
+	If (($Global:StartCollectorAutomaticallyCheck -eq 1) -or ($Global:DeleteOlderBlgFiles -ge 1)) 
 	  {
-	   Create-ScheduledTask -DcsName $Global:CollectorDisplayName 
+	   Create-ScheduledTask -DcsName $Global:CollectorDisplayName   
 	  }
    }
   ElseIf (($Global:SqlInstanceArrayList[$Global:InstanceNumber - 1] = "All") -and ($Global:SingleInstanceCheck -eq "n")) #If all instances selected
@@ -151,7 +160,7 @@ Function Select-SqlInstance
       $Global:SelectedInstance = "All"
 
       If ($Global:StartCollectorList -notcontains $Global:SqlInstanceArrayList[$i]){ $Global:StartCollectorList.Add($Global:SqlInstanceArrayList[$i]) > $null }
-      Write-Host " [*] Data Collector Set creating for" $Global:SqlInstanceArrayList[$i] -ForegroundColor DarkYellow
+      (Write-Host " [*]" -ForegroundColor Magenta -NoNewLine) + $(Write-Host " Data Collector Set creating for '" -ForegroundColor Gray -NoNewLine) + $(Write-Host $Global:SqlInstanceArrayList[$i] -ForegroundColor Gray -NoNewLine) + $(Write-Host "' instance." -ForegroundColor Gray)
 
       If ($Global:SqlInstanceArrayList[$i] -eq "MSSQLSERVER")
        {
@@ -160,10 +169,12 @@ Function Select-SqlInstance
         Create-DataCollectorSet -InstanceName "MSSQLSERVER" -OutputFolder $Global:LogFilePath -Interval $Global:IntervalNumber -Duration $Global:DurationNumber -Restart $Global:RestartTime -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $Global:StartCollectorCheck -MaxFileSize $Global:MaxLogFileSize
     
         If ($Global:StartCollectorList -notcontains 'MSSQLSERVER'){ $Global:StartCollectorList.Add("MSSQLSERVER") > $null }
-        (Write-Host " [*] Data Collector Set named " -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host $Global:CollectorDisplayName -ForegroundColor Yellow -NoNewLine) + $(Write-Host " has been created" -ForegroundColor DarkYellow)
-		 If (($Global:StartCollectorAutomaticallyCheck -eq 1) -or ($Global:DeleteOlderBlgFiles -ge 1)) 
+        (Write-Host " [+]" -ForegroundColor Green -NoNewLine) + $(Write-Host " Data Collector Set named '" -ForegroundColor Gray -NoNewLine) + $(Write-Host $Global:CollectorDisplayName -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host "' has been created." -ForegroundColor Gray) 
+			
+		If (($Global:StartCollectorAutomaticallyCheck -eq 1) -or ($Global:DeleteOlderBlgFiles -ge 1)) 
 	      {
-	       Create-ScheduledTask -DcsName $Global:CollectorDisplayName 
+	       Create-ScheduledTask -DcsName $Global:CollectorDisplayName
+
 	      }
        }
       Else
@@ -173,8 +184,9 @@ Function Select-SqlInstance
         Create-DataCollectorSet -InstanceName $Global:SqlInstanceArrayList[$i] -OutputFolder $Global:LogFilePath -Interval $Global:IntervalNumber -Duration $Global:DurationNumber -Restart $Global:RestartTime -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $Global:StartCollectorCheck -MaxFileSize $Global:MaxLogFileSize
              
         If ($Global:StartCollectorList -notcontains $Global:SqlInstanceArrayList[$i]){ $Global:StartCollectorList.Add($Global:SqlInstanceArrayList[$i]) > $null }
-        (Write-Host " [*] Data Collector Set named " -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host $Global:CollectorDisplayName -ForegroundColor Yellow -NoNewLine) + $(Write-Host " has been created" -ForegroundColor DarkYellow)
-	     If (($Global:StartCollectorAutomaticallyCheck -eq 1) -or ($Global:DeleteOlderBlgFiles -ge 1)) 
+        (Write-Host " [+]" -ForegroundColor Green -NoNewLine) + $(Write-Host " Data Collector Set named '" -ForegroundColor Gray -NoNewLine) + $(Write-Host $Global:CollectorDisplayName -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host "' has been created." -ForegroundColor Gray) 
+		    
+		If (($Global:StartCollectorAutomaticallyCheck -eq 1) -or ($Global:DeleteOlderBlgFiles -ge 1)) 
 	      {
 	       Create-ScheduledTask -DcsName $Global:CollectorDisplayName 
 	      }
@@ -217,12 +229,12 @@ Function Create-ScheduledTask([String] $DcsName)
 
   If($TaskExists)
    {
-    (Write-Host " [*] Task Scheduler task named " -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host $TaskName -ForegroundColor Yellow -NoNewLine) + $(Write-Host " has been created" -ForegroundColor DarkYellow)
-	Write-Host " [i] Please go to Task Scheduler and change the 'When running the task, use the following user account'" -ForegroundColor Yellow
-	Write-Host "     section to a user account with the necessary privileges to start the task. Additionally, check" -ForegroundColor Yellow
-	Write-Host "     the 'Run whether user is logged on or not' check box." -ForegroundColor Yellow
-	Write-Host " [i] If you change the name of the created Data Collector Set, the task created in Task Scheduler" -ForegroundColor Yellow
-	Write-Host "     to automatically start it will not function." -ForegroundColor Yellow
+	(Write-Host " [+]" -ForegroundColor Green -NoNewLine) + $(Write-Host " Task Scheduler task named '" -ForegroundColor Gray -NoNewLine) + $(Write-Host $TaskName  -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host "' has been created."  -ForegroundColor Gray)
+    (Write-Host " [i]" -ForegroundColor Yellow -NoNewLine) + $(Write-Host " Please go to Task Scheduler and change the 'When running the task, use the following" -ForegroundColor Gray)
+	Write-Host "     user account' section to a user account with the necessary privileges to start the task." -ForegroundColor Gray
+	Write-Host "     Additionally, check the 'Run whether user is logged on or not' check box." -ForegroundColor Gray
+    (Write-Host " [i]" -ForegroundColor Yellow -NoNewLine) + $(Write-Host " If you change the name of the created Data Collector Set, the task created in Task Scheduler" -ForegroundColor Gray)
+	Write-Host "     to automatically start it will not function." -ForegroundColor Gray
    }
 
   #$UpdateTaskPrincipal = New-ScheduledTaskPrincipal -UserId $UserName -RunLevel Highest
@@ -390,31 +402,31 @@ Write-Host ""
 #Make multi-color lines
 Function Write-Colr
 {
-  Param ([String[]]$Text,[ConsoleColor[]]$Colour,[Switch]$NoNewline=$false)
-  For ([int]$i = 0; $i -lt $Text.Length; $i++) { Write-Host $Text[$i] -Foreground $Colour[$i] -NoNewLine }
-  If ($NoNewline -eq $false) { Write-Host '''' }
+ Param ([String[]]$Text,[ConsoleColor[]]$Colour,[Switch]$NoNewline=$false)
+ For ([int]$i = 0; $i -lt $Text.Length; $i++) { Write-Host $Text[$i] -Foreground $Colour[$i] -NoNewLine }
+ If ($NoNewline -eq $false) { Write-Host '''' }
 }
 
 #Administrator permission check
-if (-not([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
+If (-not([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator"))
  {
   Write-Colr -Text '' [x] '', ''You do not have sufficient permissions to execute this script.'' -Colour Gray, Red
   Write-Colr -Text ''     Please open the PowerShell console as an administrator and rerun this script.'' -Colour Red
-  exit
+  Exit
  }
 
 #Counter file check
-if (-not(Test-Path -Path $PSScriptRoot\counterset.txt -PathType Leaf)) 
+If (-not(Test-Path -Path $PSScriptRoot\counterset.txt -PathType Leaf)) 
  {
   Write-Colr -Text '' [x] '', ''Counter set file not found! (counterset.txt)'' -Colour Gray, Red
-  exit
+  Exit
  }
 
 #Config file check
-if (-not(Test-Path -Path $PSScriptRoot\config.txt -PathType Leaf)) 
+If (-not(Test-Path -Path $PSScriptRoot\config.txt -PathType Leaf)) 
  {
   Write-Colr -Text '' [x] '', ''Could not find config file! (config.txt)'' -Colour Gray, Red
-  exit
+  Exit
  }
 
 #Delete BLG if exists
@@ -423,7 +435,6 @@ Function Delete-BlgFile([String] $Instance)
   If (Test-Path $LogFilePath)
    {
 	$FileName = $env:computername + "_" + $Instance + "_DCS" + $Global:GenerateRandomNum + "_perfmon_[0-9]+\.blg";
-    #$FileName = $Instance + ''_sfmc_perfmon_[0-9]+\.blg''
     Get-ChildItem -Path $LogFilePath | Where-Object {$_.name -match $FileName} | Remove-Item
    }
  }
@@ -432,9 +443,7 @@ Function Delete-BlgFile([String] $Instance)
 Function AllDone
  {
   Write-Host ""
-  Write-Host " ┌─────────────────────────────────────────────────────────────────┐" -ForegroundColor DarkCyan
-  Write-Colr -Text '' │'', ''                      Successfully Completed                     '', ''│'' -Colour DarkCyan, Gray, DarkCyan
-  Write-Host " └─────────────────────────────────────────────────────────────────┘" -ForegroundColor DarkCyan
+  Write-Colr -Text '' [>]'', '' Successfully Completed!'' -Colour Cyan, DarkCyan
  }
 
 #Create Data Collector Set
@@ -569,12 +578,12 @@ Function Create-ScheduledTask([String] $DcsName)
 
   If($TaskExists)
    {
-    (Write-Host " [*] Task Scheduler task named " -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host $TaskName -ForegroundColor Yellow -NoNewLine) + $(Write-Host " has been created" -ForegroundColor DarkYellow)
-	Write-Host " [i] Please go to Task Scheduler and change the ''When running the task, use the following user account''" -ForegroundColor Yellow
-	Write-Host "     section to a user account with the necessary privileges to start the task. Additionally, check" -ForegroundColor Yellow
-	Write-Host "     the ''Run whether user is logged on or not'' check box." -ForegroundColor Yellow
-	Write-Host " [i] If you change the name of the created Data Collector Set, the task created in Task Scheduler" -ForegroundColor Yellow
-	Write-Host "     to automatically start it will not function." -ForegroundColor Yellow
+    (Write-Host " [+]" -ForegroundColor Green -NoNewLine) + $(Write-Host " Task Scheduler task named ''" -ForegroundColor Gray -NoNewLine) + $(Write-Host $TaskName  -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host "'' has been created."  -ForegroundColor Gray)
+    (Write-Host " [i]" -ForegroundColor Yellow -NoNewLine) + $(Write-Host " Please go to Task Scheduler and change the ''When running the task, use the following" -ForegroundColor Gray)
+	Write-Host "     user account'' section to a user account with the necessary privileges to start the task." -ForegroundColor Gray
+	Write-Host "     Additionally, check the ''Run whether user is logged on or not'' check box." -ForegroundColor Gray
+    (Write-Host " [i]" -ForegroundColor Yellow -NoNewLine) + $(Write-Host " If you change the name of the created Data Collector Set, the task created in Task Scheduler" -ForegroundColor Gray)
+	Write-Host "     to automatically start it will not function." -ForegroundColor Gray
    }
  }
 
@@ -607,11 +616,12 @@ If ($instance.Substring($instance.Substring($instance.IndexOf("=") +1) -contains
 { 
  For ($i=0; $i -lt $instance.Substring($instance.IndexOf("=") +1).Split(",").Count; $i++) 
  {
-  Write-Host " [*] Data Collector Set creating for" $instance.Substring($instance.IndexOf("=") +1).Split(",")[$i] -ForegroundColor DarkYellow
+  (Write-Host " [*]" -ForegroundColor Magenta -NoNewLine) + $(Write-Host " Data Collector Set creating for ''" -ForegroundColor Gray -NoNewLine) + $(Write-Host $instance.Substring($instance.IndexOf("=") +1).Split(",")[$i] -ForegroundColor Gray -NoNewLine) + $(Write-Host "'' instance." -ForegroundColor Gray)
   Delete-BlgFile -Instance $Global:SelectedInstance
   Create-DataCollectorSet -InstanceName $instance.Substring($instance.IndexOf("=") +1).Split(",")[$i] -OutputFolder $logfilepath -Interval $interval -Duration $duration -Restart $restart -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $startcheck -MaxFileSize $logfilesize         
   $DcsFullName = $instance.Substring($instance.IndexOf("=") +1).Split(",")[$i] + $Global:CollectorDcsPattern
-  (Write-Host " [*] Data Collector Set named " -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host $DcsFullName -ForegroundColor Yellow -NoNewLine) + $(Write-Host " has been created" -ForegroundColor DarkYellow) 
+  (Write-Host " [+]" -ForegroundColor Green -NoNewLine) + $(Write-Host " Data Collector Set named ''" -ForegroundColor Gray -NoNewLine) + $(Write-Host $DcsFullName -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host "'' has been created." -ForegroundColor Gray) 
+
   If (($startautocheck -eq 1) -or ($deletexdaysolderblgfiles -ge 1)) 
    {
 	Create-ScheduledTask -DcsName $DcsFullName
@@ -621,11 +631,13 @@ If ($instance.Substring($instance.Substring($instance.IndexOf("=") +1) -contains
 }
 Else
 {
- Write-Host " [*] Data Collector Set creating for" $instance.Substring($instance.IndexOf("=") +1)  -ForegroundColor DarkYellow
+ (Write-Host " [*]" -ForegroundColor Magenta -NoNewLine) + $(Write-Host " Data Collector Set creating for ''" -ForegroundColor Gray -NoNewLine) + $(Write-Host $instance.Substring($instance.IndexOf("=") +1) -ForegroundColor Gray -NoNewLine) + $(Write-Host "'' instance." -ForegroundColor Gray)
+ 
  Delete-BlgFile -Instance $Global:SelectedInstance
  Create-DataCollectorSet -InstanceName $instance.Substring($instance.IndexOf("=") +1) -OutputFolder $logfilepath -Interval $interval -Duration $duration -Restart $restart -Circular $true -CounterFile $PSScriptRoot"\counterset.txt" -StartCounter $startcheck -MaxFileSize $logfilesize
  $DcsFullName = $instance.Substring($instance.IndexOf("=") +1).Split(",")[$i] + $Global:CollectorDcsPattern
- (Write-Host " [*] Data Collector Set named " -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host $DcsFullName -ForegroundColor Yellow -NoNewLine) + $(Write-Host " has been created" -ForegroundColor DarkYellow)
+ (Write-Host " [+]" -ForegroundColor Green -NoNewLine) + $(Write-Host " Data Collector Set named ''" -ForegroundColor Gray -NoNewLine) + $(Write-Host $DcsFullName -ForegroundColor DarkYellow -NoNewLine) + $(Write-Host "'' has been created." -ForegroundColor Gray) 
+  
   If (($startautocheck -eq 1) -or ($deletexdaysolderblgfiles -ge 1)) 
    {
 	Create-ScheduledTask -DcsName $DcsFullName
