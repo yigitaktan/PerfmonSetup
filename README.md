@@ -75,7 +75,15 @@ To create the unattended file, you need to answer '**Y**' (Yes) to the last ques
 
 As seen in the screenshot below, upon completion of the creation process, a 9KB ZIP file is generated. All you need to do is extract this file.
 
-![f1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/062ccb33-f628-4883-a727-2044764ba709)
+[f1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/062ccb33-f628-4883-a727-2044764ba709)
+
+"When you extract the perfmonfile.zip file, you will encounter three files:
+
+* **config.txt:** This file contains all the configurations, and you can modify the parameters in this file as needed.
+* **counterset.txt:** This file holds the list of counters to be applied. Don't forget to use the **[MYINSTANCENAME]** definition, as discussed in the [Preparing the counter set file](#Preparing-the-counter-set-file) section.
+* **unattended-setup.ps1:** This is the main PowerShell script that facilitates the unattended installation.
+
+![d1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/83ce460b-438e-444f-8908-25b2f610be49)
 
 ## Execution Policy errors
 If you encounter issues with PowerShell execution policy, please refer to this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
@@ -90,6 +98,7 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
+
 
 
 
