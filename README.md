@@ -69,10 +69,13 @@ You can easily create the Data Collector Set by answering a few questions sequen
 ## Unattended file creation
 If you need to deploy the Data Collector Set across multiple SQL Server environments, you don't have to manually copy the script and its components to each SQL Server instance and answer all the prompts. Instead, you can utilize the script's unattended installation feature. Once you create an unattended file, you can easily deploy Data Collector Sets across your SQL Server farm by simply modifying the values in the `config.txt` file.
 
-To create the unattended file, you need to answer 'Y' (Yes) to the last question (**Would you like to create a setup file for later use?**). After this step, all the criteria you previously set will be added to `config.txt`, and compressed along with the `unattended-setup.ps1` script to create a file named `perfmonfile.zip`. The location of this file, as shown in the screenshot below, will be in the same path as your existing script.
+To create the unattended file, you need to answer '**Y**' (Yes) to the last question (**Would you like to create a setup file for later use?**). After this step, all the criteria you previously set will be added to `config.txt`, and compressed along with the `unattended-setup.ps1` script to create a file named `perfmonfile.zip`. The location of this file, as shown in the screenshot below, will be in the same path as your existing script.
 
 ![unattend2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/2e2ffeda-2efb-4070-bca9-bd61f632c9c5)
-![unattend2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/ede22f57-68d8-4257-81e9-a80412bcfdc4)
+
+As seen in the screenshot below, upon completion of the creation process, a 9KB ZIP file is generated. All you need to do is extract this file.
+
+![folder2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/0d7d0540-ef69-46c7-8079-8f4fc8a5ca16)
 
 ## Execution Policy errors
 If you encounter issues with PowerShell execution policy, please refer to this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
@@ -87,4 +90,5 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
+
 
