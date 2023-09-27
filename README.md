@@ -68,6 +68,11 @@ You can easily create the Data Collector Set by answering a few questions sequen
 
 ![full3](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/ccb2043e-a85e-4460-9d99-92295872b5ce)
 
+## Execution Policy errors
+If you encounter issues with PowerShell execution policy, please refer to this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
+
+![policy1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/d83ce0a7-a290-4a65-baea-ac2f289ba9e3)
+
 ## Encoding errors
 If you encounter character encoding errors when running the script, it might have occurred due to character encoding corruption during download, and you have likely encountered errors similar to the screenshot below. To resolve this, open the `create-collector.ps1` and `functions.psm1` files in a text editor like Notepad++ and set the character encoding to **UTF-16**.
 
