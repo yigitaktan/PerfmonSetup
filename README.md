@@ -1,8 +1,14 @@
 # Setting Up Perfmon Data Collector Set for SQL Server Instances
 
-* **[Getting started with script](#Execution-Policy-errors)**
+* **[Getting started with the script](#Getting-started-with-the-script)**
+* **[Script Components](#Script-Components)**
+* **[Preparing the counter set file](#Preparing-the-counter-set-file)**
+* **[Running the script](#Running-the-script)**
+* **[Unattended file creation](#Unattended-file-creation)**
+* **[Execution Policy errors](#Execution-Policy-errors)**
+* **[Encoding errors](#Encoding-errors)**
 
-## Getting started with script
+## Getting started with the script
 You can easily create Performance Monitor (Perfmon) Data Collector Sets using with this script . All you need to do is answer a few questions according to your criteria. Please note that this script is designed specifically for SQL Server instances. It will not work if there is no SQL Server instance installed on the machine where it is run.
 ## Script Components
 * **[create-collector.ps1](https://github.com/yigitaktan/PerfmonSetup/blob/main/create-collector.ps1):** The primary script
