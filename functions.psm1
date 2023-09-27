@@ -26,8 +26,17 @@ Function Compress-SetupFile
   CompressionLevel = "Fastest"
   DestinationPath =  $CompressedFile}
 
- Compress-Archive -Force @compress
- Write-Host " [*] Created: " $CompressedFile -ForegroundColor DarkYellow
+  Compress-Archive -Force @compress
+
+  Clear-Host
+  
+  Write-Host " ╔═════════════════════════════════════════════════════════════════╗" -ForegroundColor Gray
+  Write-Host " ║ Setting Up Perfmon Data Collector Set for SQL Server Instances  ║" -ForegroundColor Gray
+  Write-Host " ╠═════════════╦═══════════╦══════════════════════╦════════════════╣" -ForegroundColor Gray
+  Write-Host " ║ Yigit Aktan ║ Microsoft ║ yigita@microsoft.com ║" $AppVer     " ║" -ForegroundColor Gray
+  Write-Host " ╚═════════════╩═══════════╩══════════════════════╩════════════════╝" -ForegroundColor Gray
+  Write-Host ""
+  Write-Colr -Text ' [+] ', 'Created: ', $CompressedFile -Colour Green, Gray, DarkYellow
 
  If (Test-Path $ConfigFileSetup) 
   {
@@ -38,7 +47,7 @@ Function Compress-SetupFile
   {
    Remove-Item $UnattendedSetupFile
   }
-
+ AllDone
  }
 
 #List SQL Server instances
