@@ -99,7 +99,7 @@ After placing these three files in the same directory, you can automatically cre
 
 `powershell.exe -File .\unattended-setup.ps1`
    
-![son1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/16ed8013-6fd7-4b9c-929f-12de3cc1199e)
+![son2](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/4ea88474-fdb4-4f36-b136-bf70cc0336c2)
 
 The config.txt file consists of 9 parameters:
 
