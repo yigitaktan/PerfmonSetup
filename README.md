@@ -5,7 +5,6 @@
 * **[Preparing the counter set file](#Preparing-the-counter-set-file)**
 * **[Running the script](#Running-the-script)**
 * **[Unattended file creation](#Unattended-file-creation)**
-   * **[config.txt file](#configtxt-file)**
 * **[Execution Policy errors](#Execution-Policy-errors)**
 * **[Encoding errors](#Encoding-errors)**
 
@@ -102,8 +101,7 @@ After placing these three files in the same directory, you can automatically cre
    
 ![son4](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/d8858580-3d9e-46cf-89cd-2c8631161291)
 
-### config.txt file
-The config.txt file consists of 9 parameters:
+The **config.txt** file consists of 9 parameters:
 
 * **instance**: Specifies the SQL Server instance.
 * **interval**: Determines how often the Data Collector Set collects data, specified in seconds as a numerical value.
