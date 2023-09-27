@@ -85,6 +85,12 @@ When you extract the perfmonfile.zip file, you will encounter three files:
 
 ![d1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/83ce460b-438e-444f-8908-25b2f610be49)
 
+After placing these three files in the same directory, you can automatically create your Data Collector Set with the parameters you specified in config.txt using the following command.
+
+`powershell.exe -File .\unattended-setup.ps1`
+
+![uf1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/e5aea03a-046d-44d8-a962-cdaf35955721)
+
 ## Execution Policy errors
 If you encounter issues with PowerShell execution policy, please refer to this link: [About Execution Policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1)
 
@@ -98,13 +104,3 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
-
-
-
-
-
-
-
-
-
-
