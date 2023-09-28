@@ -143,4 +143,4 @@ If you are using Notepad++, you can easily set the correct encoding setting by o
   
 * Similarly, if you change the path of the BLG files from within Perfmon and have set them to be deleted older than a certain number of days, you must also implement this path change in the other Powershell code within the Task Scheduler task.
 
-  `-Command "Get-ChildItem –Path '**C:\perfmon_data**' -Recurse -Filter *.blg | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-10))} | Remove-Item"`
+  `-Command "Get-ChildItem –Path 'C:\perfmon_data' -Recurse -Filter *.blg | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-10))} | Remove-Item"`
