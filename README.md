@@ -62,7 +62,7 @@ If you want to see a list of Perfmon counters that you can use within `counter.t
 The script requires administrator privileges.
 If you don't run Command Prompt or PowerShell IDE with administrator privileges, you will encounter the following warning message.
 
-![admin8](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/1ec39f44-38e5-4d66-a78e-1e067c614796)
+![ad1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/0d6c07cc-79b8-44e2-aafe-59d495b9b760)
 
 Ensure that all three component files are in the same directory, then execute the script using the following command.
 
@@ -128,3 +128,6 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
+
+
+
