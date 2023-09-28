@@ -74,7 +74,7 @@ After running the script with administrator privileges and the appropriate execu
 
 You can easily create the Data Collector Set by answering a few questions sequentially.
 
-![full3](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/ccb2043e-a85e-4460-9d99-92295872b5ce)
+![fl1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/9612e160-926f-4322-ac06-44ef1697c466)
 
 ## Unattended file creation
 If you need to deploy the Data Collector Set across multiple SQL Server environments, you don't have to manually copy the script and its components to each SQL Server instance and answer all the prompts. Instead, you can utilize the script's unattended installation feature. Once you create an unattended file, you can easily deploy Data Collector Sets across your SQL Server farm by simply modifying the values in the `config.txt` file.
@@ -128,6 +128,3 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
-
-
-
