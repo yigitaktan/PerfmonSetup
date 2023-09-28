@@ -138,9 +138,9 @@ If you are using Notepad++, you can easily set the correct encoding setting by o
 * If you want to delete the created Data Collector Set, and a Task Scheduler task was created during its creation, you must manually delete the corresponding task from Task Scheduler after removing the Data Collector Set from Perfmon.
 
 * If you have created a Task Scheduler task to ensure that the Data Collector Set restarts in case of any stoppage while creating it, and later you wish to change the name of the Data Collector Set created in Perfmon, be sure to apply this change within the Action of the task in the Actions tab of Task Scheduler.
-  
-  `-Command "$name = 'SQL2019_DCS256'; $serverName = (Get-WmiObject -Class Win32_ComputerSystem).Name; $datacollectorset = New-Object -COM Pla.DataCollectorSet; $datacollectorset.Query($name, $serverName); if ($datacollectorset.Status -eq 0) { logman start $name }"`
+        
+  </pre>-Command "$name = '<b>SQL2019_DCS256</b>'; $serverName = (Get-WmiObject -Class Win32_ComputerSystem).Name; $datacollectorset = New-Object -COM Pla.DataCollectorSet; $datacollectorset.Query($name, $serverName); if ($datacollectorset.Status -eq 0) { logman start $name }"</pre>
   
 * Similarly, if you change the path of the BLG files from within Perfmon and have set them to be deleted older than a certain number of days, you must also implement this path change in the other Powershell code within the Task Scheduler task.
 
-  `-Command "Get-ChildItem –Path 'C:\perfmon_data' -Recurse -Filter *.blg | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-10))} | Remove-Item"`
+  <pre>-Command "Get-ChildItem –Path '<b>C:\perfmon_data</b>' -Recurse -Filter *.blg | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-10))} | Remove-Item"</pre>
