@@ -95,7 +95,9 @@ As seen in the screenshot below, upon completion of the creation process, a 9KB 
 When you extract the perfmonfile.zip file, you will encounter three files:
 
 * **config.txt:** This file contains all the configurations, and you can modify the parameters in this file as needed.
+  
 * **counterset.txt:** This file holds the list of counters to be applied. Don't forget to use the **[MYINSTANCENAME]** definition, as discussed in the [Preparing the counter set file](#Preparing-the-counter-set-file) section.
+  
 * **unattended-setup.ps1:** This is the main PowerShell script that facilitates the unattended installation.
 
 ![d1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/83ce460b-438e-444f-8908-25b2f610be49)
