@@ -7,6 +7,7 @@
 * **[Unattended file creation](#Unattended-file-creation)**
 * **[Execution Policy errors](#Execution-Policy-errors)**
 * **[Encoding errors](#Encoding-errors)**
+* **[Important considerations](Important-considerations)**
 
 ## Getting started with the script
 You can easily create Performance Monitor (Perfmon) Data Collector Sets using with this script . All you need to do is answer a few questions according to your criteria. Please note that this script is designed specifically for SQL Server instances. It will not work if there is no SQL Server instance installed on the machine where it is run.
@@ -80,8 +81,6 @@ When you also answer the last question in the screenshot above, your Data Collec
 
 ![cm1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/a2aa4b93-192c-4f39-ba23-fcd9bd1dfddd)
 
-If you want to delete the created Data Collector Set, and a Task Scheduler task was created during its creation, you must manually delete the corresponding task from Task Scheduler after removing the Data Collector Set from Perfmon.
-
 ## Unattended file creation
 If you need to deploy the Data Collector Set across multiple SQL Server environments, you don't have to manually copy the script and its components to each SQL Server instance and answer all the prompts. Instead, you can utilize the script's unattended installation feature. Once you create an unattended file, you can easily deploy Data Collector Sets across your SQL Server farm by simply modifying the values in the `config.txt` file.
 
@@ -134,3 +133,10 @@ If you encounter character encoding errors when running the script, it might hav
 If you are using Notepad++, you can easily set the correct encoding setting by opening the `create-collector.ps1` and `functions.psm1` files and selecting either **Convert to UTF-16 BE BOM** or **Convert to UTF-16 LE BOM** from the Encoding menu.
 
 ![enc10](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/19a4c75f-e9a7-48d8-b8ca-acd72cf7b31e)
+
+## Important considerations
+* If you want to delete the created Data Collector Set, and a Task Scheduler task was created during its creation, you must manually delete the corresponding task from Task Scheduler after removing the Data Collector Set from Perfmon.
+* If you have created a Task Scheduler task to ensure that the Data Collector Set restarts in case of any stoppage while creating it, and later you wish to change the name of the Data Collector Set created in Perfmon, be sure to apply this change within the Action of the task in the Actions tab of Task Scheduler.
+  `-Command "$name = 'SQL2019_DCS256'; $serverName = (Get-WmiObject -Class Win32_ComputerSystem).Name; $datacollectorset = New-Object -COM Pla.DataCollectorSet; $datacollectorset.Query($name, $serverName); if ($datacollectorset.Status -eq 0) { logman start $name }"`
+* Similarly, if you change the path of the BLG files from within Perfmon and have set them to be deleted older than a certain number of days, you must also implement this path change in the other Powershell code within the Task Scheduler task.
+  `-Command "Get-ChildItem –Path 'C:\perfmon_data' -Recurse -Filter *.blg | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-10))} | Remove-Item"`
