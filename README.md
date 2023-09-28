@@ -76,6 +76,12 @@ You can easily create the Data Collector Set by answering a few questions sequen
 
 ![fl1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/9612e160-926f-4322-ac06-44ef1697c466)
 
+When you also answer the last question in the screenshot above, your Data Collector Set will be successfully created based on the criteria you selected.
+
+![cm1](https://github.com/yigitaktan/PerfmonSetup/assets/51110247/a2aa4b93-192c-4f39-ba23-fcd9bd1dfddd)
+
+If you want to delete the created Data Collector Set, and a Task Scheduler task was created during its creation, you must manually delete the corresponding task from Task Scheduler after removing the Data Collector Set from Perfmon.
+
 ## Unattended file creation
 If you need to deploy the Data Collector Set across multiple SQL Server environments, you don't have to manually copy the script and its components to each SQL Server instance and answer all the prompts. Instead, you can utilize the script's unattended installation feature. Once you create an unattended file, you can easily deploy Data Collector Sets across your SQL Server farm by simply modifying the values in the `config.txt` file.
 
