@@ -13,7 +13,7 @@
 You can easily create Performance Monitor (Perfmon) Data Collector Sets using with this script . All you need to do is answer a few questions according to your criteria. Please note that this script is designed specifically for SQL Server instances. It will not work if there is no SQL Server instance installed on the machine where it is run.
 ## Script components
 * **[create-collector.ps1](https://github.com/yigitaktan/PerfmonSetup/blob/main/create-collector.ps1):** The primary script
-* **[functions.psm1](https://github.com/yigitaktan/PerfmonSetup/blob/main/functions.psm1):** A function file utilized by the `countersetup.ps1` script.
+* **[functions.psm1](https://github.com/yigitaktan/PerfmonSetup/blob/main/functions.psm1):** A function file utilized by the `create-collector.ps1` script.
 * **[counterset.txt](https://github.com/yigitaktan/PerfmonSetup/blob/main/counterset.txt):** A list of counters necessary for creating a Data Collector Set.
 ## Preparing the counter set file
 To begin, you need to determine the performance counters from which you want to collect performance data. Specify these counters in the `counterset.txt` file, one per line.
